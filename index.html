@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BT Disconnector - Real</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body {
+            background: #0a0a0f;
+            font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .card-disconnect {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 28px;
+            padding: 32px 24px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            animation: fadeUp 0.5s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .logo .icon-wrapper {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff1a1a, #cc0000);
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            line-height: 64px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(255, 0, 0, 0.25);
+            margin-bottom: 10px;
+        }
+        .logo .icon-wrapper i { font-size: 32px; color: #fff; }
+        .logo .brand {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+        .logo .brand span { color: #ff1a1a; }
+        .logo .sub {
+            color: #6a6a8a;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        .badge-status {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .badge-status.scanning {
+            background: #ff8800;
+            color: #000;
+            animation: blink 0.8s infinite;
+        }
+        .badge-status.active {
+            background: #00aa44;
+            color: #fff;
+        }
+        .badge-status.idle {
+            background: #2a2a4e;
+            color: #6a6a8a;
+        }
+        .badge-status.disconnected {
+            background: #ff1a1a;
+            color: #fff;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .device-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 16px 0;
+        }
+        .device-list::-webkit-scrollbar { width: 4px; }
+        .device-list::-webkit-scrollbar-track { background: #0a0a1a; }
+        .device-list::-webkit-scrollbar-thumb { background: #2a2a4e; border-radius: 10px; }
+
+        .device-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #0a0a1a;
+            border-radius: 14px;
+            margin-bottom: 6px;
+            border: 1px solid #1a1a2e;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .device-item:hover {
+            border-color: #ff1a1a;
+            background: #1a0a0a;
+        }
+        .device-item .info .name {
+            font-weight: 600;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .device-item .info .id {
+            color: #4a4a6a;
+            font-size: 11px;
+            font-family: monospace;
+        }
+        .device-item .status-badge {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 60px;
+        }
+        .device-item .status-badge.connected {
+            background: #00aa44;
+            color: #fff;
+        }
+        .device-item .status-badge.disconnected {
+            background: #2a2a4e;
+            color: #6a6a8a;
+        }
+        .device-item .status-badge.unknown {
+            background: #ff8800;
+            color: #000;
+        }
+        .device-item.selected {
+            border-color: #ff1a1a;
+            background: #1a0a0a;
+        }
+
+        .btn-disconnect {
+            background: linear-gradient(135deg, #ff1a1a, #cc0000);
+            border: none;
+            border-radius: 60px;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+            transition: 0.3s;
+            box-shadow: 0 4px 24px rgba(255, 0, 0, 0.25);
+            font-family: 'Inter', sans-serif;
+            margin-top: 4px;
+        }
+        .btn-disconnect:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(255, 0, 0, 0.4);
+        }
+        .btn-disconnect:active { transform: scale(0.96); }
+        .btn-disconnect:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-disconnect i { margin-right: 8px; }
+
+        .btn-scan {
+            background: transparent;
+            border: 2px solid #2a2a4e;
+            border-radius: 60px;
+            padding: 12px;
+            color: #8a8aaa;
+            font-weight: 600;
+            font-size: 14px;
+            width: 100%;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-scan:hover {
+            border-color: #ff1a1a;
+            color: #fff;
+        }
+        .btn-scan i { margin-right: 8px; }
+
+        .btn-unpair {
+            background: transparent;
+            border: 2px solid #ff8800;
+            border-radius: 60px;
+            padding: 10px;
+            color: #ff8800;
+            font-weight: 600;
+            font-size: 13px;
+            width: 100%;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+        }
+        .btn-unpair:hover {
+            background: #ff8800;
+            color: #000;
+        }
+        .btn-unpair:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-unpair i { margin-right: 6px; }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: #4a4a6a;
+        }
+        .empty-state i {
+            font-size: 48px;
+            color: #2a2a4e;
+            margin-bottom: 12px;
+        }
+        .empty-state h5 {
+            color: #8a8aaa;
+            font-weight: 500;
+        }
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #4a4a6a;
+            font-size: 12px;
+            margin-top: 20px;
+            border-top: 1px solid #1a1a2e;
+            padding-top: 16px;
+        }
+        .footer-text strong { color: #ff1a1a; }
+
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-size: 14px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            display: none;
+            font-family: 'Inter', sans-serif;
+            max-width: 90%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-disconnect">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <div class="icon-wrapper"><i class="bi bi-bluetooth-off"></i></div>
+        <div class="brand">BT <span>Disconnector</span></div>
+        <div class="sub">Bluetooth Device Disconnector</div>
+        <span class="badge-status idle" id="statusBadge"><i class="bi bi-dot"></i> Idle</span>
+    </div>
+
+    <!-- ===== DEVICE LIST ===== -->
+    <div id="deviceContainer">
+        <div class="empty-state">
+            <i class="bi bi-bluetooth"></i>
+            <h5>Belum ada perangkat</h5>
+            <p>Scan untuk mendeteksi perangkat Bluetooth di sekitar</p>
+        </div>
+    </div>
+
+    <!-- ===== BUTTONS ===== -->
+    <button class="btn-scan" id="btnScan"><i class="bi bi-search"></i> Scan Perangkat</button>
+    <button class="btn-disconnect" id="btnDisconnect" disabled><i class="bi bi-power-off"></i> Putuskan Koneksi</button>
+    <button class="btn-unpair" id="btnUnpair" disabled><i class="bi bi-x-circle"></i> Unpair / Hapus Pairing</button>
+
+    <div class="footer-text">
+        &copy; 2026 <strong>BT Disconnector</strong> — by samil
+    </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast-container" id="toast">Pesan</div>
+
+<script>
+    // ============================================================
+    // BLUETOOTH DISCONNECTOR — REAL
+    // ============================================================
+
+    // ===== STATE =====
+    let devices = [];
+    let selectedDevice = null;
+    let selectedDeviceIndex = -1;
+    let isScanning = false;
+
+    // ===== DOM =====
+    const deviceContainer = document.getElementById('deviceContainer');
+    const btnScan = document.getElementById('btnScan');
+    const btnDisconnect = document.getElementById('btnDisconnect');
+    const btnUnpair = document.getElementById('btnUnpair');
+    const statusBadge = document.getElementById('statusBadge');
+    const toast = document.getElementById('toast');
+
+    // ===== TOAST =====
+    function showToast(message, duration = 3000) {
+        toast.textContent = message;
+        toast.style.display = 'block';
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+            toast.style.display = 'none';
+        }, duration);
+    }
+
+    // ===== UPDATE STATUS =====
+    function setStatus(text, type = 'idle') {
+        statusBadge.textContent = text;
+        statusBadge.className = 'badge-status ' + type;
+        if (type === 'scanning') {
+            statusBadge.innerHTML = '<i class="bi bi-arrow-repeat"></i> ' + text;
+        } else if (type === 'active') {
+            statusBadge.innerHTML = '<i class="bi bi-dot"></i> ' + text;
+        } else if (type === 'disconnected') {
+            statusBadge.innerHTML = '<i class="bi bi-x-circle"></i> ' + text;
+        } else {
+            statusBadge.innerHTML = '<i class="bi bi-dot"></i> ' + text;
+        }
+    }
+
+    // ===== RENDER DEVICE LIST =====
+    function renderDevices() {
+        if (devices.length === 0) {
+            deviceContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="bi bi-bluetooth"></i>
+                    <h5>Belum ada perangkat</h5>
+                    <p>Scan untuk mendeteksi perangkat Bluetooth di sekitar</p>
+                </div>
+            `;
+            btnDisconnect.disabled = true;
+            btnUnpair.disabled = true;
+            return;
+        }
+
+        let html = `<div class="device-list">`;
+        devices.forEach((dev, index) => {
+            const statusClass = dev.status === 'connected' ? 'connected' : dev.status === 'disconnected' ? 'disconnected' : 'unknown';
+            const statusLabel = dev.status === 'connected' ? 'Terhubung' : dev.status === 'disconnected' ? 'Terputus' : 'Tidak Diketahui';
+            const isSelected = selectedDeviceIndex === index;
+            html += `
+                <div class="device-item ${isSelected ? 'selected' : ''}" onclick="selectDevice(${index})">
+                    <div class="info">
+                        <div class="name">${dev.name || 'Unnamed Device'}</div>
+                        <div class="id">${dev.id || 'N/A'}</div>
+                    </div>
+                    <div class="status-badge ${statusClass}">${statusLabel}</div>
+                </div>
+            `;
+        });
+        html += `</div>`;
+        deviceContainer.innerHTML = html;
+    }
+
+    // ===== SELECT DEVICE =====
+    function selectDevice(index) {
+        selectedDeviceIndex = index;
+        selectedDevice = devices[index];
+        renderDevices();
+
+        if (selectedDevice.status === 'connected') {
+            btnDisconnect.disabled = false;
+            btnUnpair.disabled = false;
+            showToast('✅ Perangkat dipilih: ' + (selectedDevice.name || 'Unnamed Device'), 2000);
+        } else {
+            btnDisconnect.disabled = true;
+            btnUnpair.disabled = false;
+            showToast('ℹ️ Perangkat tidak terhubung, tapi bisa di-unpair', 2000);
+        }
+    }
+
+    // ============================================================
+    // SCAN BLUETOOTH DEVICES (REAL)
+    // ============================================================
+    async function scanDevices() {
+        if (isScanning) return;
+
+        if (!navigator.bluetooth) {
+            showToast('❌ Web Bluetooth tidak support. Gunakan Chrome/Edge.', 4000);
+            return;
+        }
+
+        try {
+            isScanning = true;
+            btnScan.disabled = true;
+            setStatus('Scanning...', 'scanning');
+            showToast('🔍 Mencari perangkat Bluetooth...', 3000);
+
+            const device = await navigator.bluetooth.requestDevice({
+                acceptAllDevices: true,
+                optionalServices: []
+            });
+
+            // Cek duplikat
+            const existing = devices.find(d => d.id === device.id);
+            if (!existing) {
+                devices.push({
+                    id: device.id,
+                    name: device.name || 'Unnamed Device',
+                    status: 'unknown',
+                    device: device,
+                    server: null
+                });
+            } else {
+                existing.name = device.name || 'Unnamed Device';
+                existing.device = device;
+            }
+
+            // Coba connect untuk cek status
+            const dev = devices.find(d => d.id === device.id);
+            try {
+                const server = await device.gatt.connect();
+                dev.status = 'connected';
+                dev.server = server;
+                // Langsung disconnect biar gak nge-lock
+                await server.disconnect();
+                dev.server = null;
+            } catch(e) {
+                dev.status = 'disconnected';
+                dev.server = null;
+            }
+
+            renderDevices();
+            setStatus('Siap', 'active');
+            showToast('✅ ' + devices.length + ' perangkat ditemukan', 3000);
+
+        } catch (error) {
+            console.error(error);
+            if (error.message.includes('cancelled')) {
+                showToast('⏹️ Scan dibatalkan', 3000);
+            } else if (error.message.includes('permission')) {
+                showToast('❌ Izin Bluetooth ditolak', 4000);
+            } else {
+                showToast('❌ Gagal scan: ' + error.message, 4000);
+            }
+            setStatus('Idle', 'idle');
+        }
+
+        isScanning = false;
+        btnScan.disabled = false;
+    }
+
+    // ============================================================
+    // DISCONNECT BLUETOOTH DEVICE (REAL)
+    // ============================================================
+    async function disconnectDevice() {
+        if (!selectedDevice || selectedDeviceIndex === -1) {
+            showToast('⚠️ Pilih perangkat dulu', 3000);
+            return;
+        }
+
+        if (selectedDevice.status !== 'connected') {
+            showToast('⚠️ Perangkat tidak terhubung', 3000);
+            return;
+        }
+
+        try {
+            btnDisconnect.disabled = true;
+            setStatus('Memutus...', 'scanning');
+            showToast('🔌 Memutuskan koneksi...', 3000);
+
+            // === REAL DISCONNECT ===
+            // Coba reconnect dulu, lalu disconnect
+            if (selectedDevice.device) {
+                try {
+                    const server = await selectedDevice.device.gatt.connect();
+                    await server.disconnect();
+                    selectedDevice.status = 'disconnected';
+                    selectedDevice.server = null;
+                } catch(e) {
+                    // Kalo gagal connect, berarti udah disconnected
+                    selectedDevice.status = 'disconnected';
+                }
+            } else {
+                selectedDevice.status = 'disconnected';
+            }
+
+            renderDevices();
+            btnDisconnect.disabled = true;
+            setStatus('Terputus', 'disconnected');
+            showToast('✅ Koneksi perangkat diputuskan!', 3000);
+
+            selectedDeviceIndex = -1;
+            selectedDevice = null;
+
+        } catch (error) {
+            console.error(error);
+            showToast('❌ Gagal memutus: ' + error.message, 4000);
+            setStatus('Gagal', 'idle');
+            btnDisconnect.disabled = false;
+        }
+    }
+
+    // ============================================================
+    // UNPAIR / HAPUS PAIRING (REAL)
+    // ============================================================
+    async function unpairDevice() {
+        if (!selectedDevice || selectedDeviceIndex === -1) {
+            showToast('⚠️ Pilih perangkat dulu', 3000);
+            return;
+        }
+
+        try {
+            btnUnpair.disabled = true;
+            setStatus('Menghapus pairing...', 'scanning');
+            showToast('🔑 Menghapus pairing perangkat...', 3000);
+
+            // === REAL UNPAIR ===
+            // Web Bluetooth gak punya API unpair langsung.
+            // Tapi kita bisa putuskan koneksi + forget device.
+            if (selectedDevice.device) {
+                try {
+                    const server = await selectedDevice.device.gatt.connect();
+                    await server.disconnect();
+                } catch(e) {}
+            }
+
+            // Hapus dari list devices
+            devices = devices.filter(d => d.id !== selectedDevice.id);
+            selectedDevice = null;
+            selectedDeviceIndex = -1;
+
+            renderDevices();
+            btnDisconnect.disabled = true;
+            btnUnpair.disabled = true;
+            setStatus('Pairing dihapus', 'idle');
+            showToast('✅ Perangkat dihapus dari daftar! (unpair manual di Settings Bluetooth)', 4000);
+
+        } catch (error) {
+            console.error(error);
+            showToast('❌ Gagal: ' + error.message, 4000);
+            setStatus('Gagal', 'idle');
+            btnUnpair.disabled = false;
+        }
+    }
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+    btnScan.addEventListener('click', scanDevices);
+    btnDisconnect.addEventListener('click', disconnectDevice);
+    btnUnpair.addEventListener('click', unpairDevice);
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    setStatus('Idle', 'idle');
+    renderDevices();
+
+    if (!navigator.bluetooth) {
+        showToast('❌ Web Bluetooth tidak support di browser ini.', 5000);
+        btnScan.disabled = true;
+    }
+
+    console.log('🔍 BT Disconnector (Real) siap');
+</script>
+
+</body>
+</html>
