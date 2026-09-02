@@ -6,6 +6,7 @@
     <title>SMXL - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        /* ===== SAMA KAYAK SEBELUMNYA ===== */
         * {
             margin: 0;
             padding: 0;
@@ -99,7 +100,6 @@
             margin-top: 4px;
         }
 
-        /* ===== VERIFIKASI JEMPOL ===== */
         .verif-section {
             margin: 18px 0 24px;
             text-align: center;
@@ -343,7 +343,6 @@
                 <div class="subtitle">Super Max Level</div>
             </div>
 
-            <!-- ===== VERIFIKASI JEMPOL ===== -->
             <div class="verif-section">
                 <span class="verif-label">
                     <i class="fas fa-fingerprint"></i> Verifikasi
@@ -355,7 +354,6 @@
                 <div class="verif-status" id="verifStatus">Scan jempol untuk verifikasi</div>
             </div>
 
-            <!-- FORM LOGIN -->
             <form id="loginForm" autocomplete="off">
                 <div class="input-group">
                     <i class="fas fa-user input-icon"></i>
@@ -387,8 +385,9 @@
         // KONFIGURASI
         // ============================================================
 
-        // GANTI URL INI DENGAN REPO DATA LO!
-        const DATA_URL = 'https://raw.githubusercontent.com/samillll/SMXL/refs/heads/main/data.json';
+        // GANTI DENGAN GIST LO!
+        const GIST_ID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+        const GIST_URL = `https://api.github.com/gists/${GIST_ID}`;
 
         // ============================================================
         // STATE
@@ -396,7 +395,7 @@
         let isVerified = false;
         let holdInterval = null;
         let holdDuration = 0;
-        const REQUIRED_HOLD = 3000; // 3 detik
+        const REQUIRED_HOLD = 3000;
 
         // ============================================================
         // REFS
@@ -407,7 +406,7 @@
         const loginMsg = document.getElementById('loginMsg');
 
         // ============================================================
-        // FINGERPRINT HOLD (3 DETIK)
+        // FINGERPRINT HOLD
         // ============================================================
         fingerprintBtn.addEventListener('mousedown', startHold);
         fingerprintBtn.addEventListener('touchstart', startHold);
@@ -463,14 +462,15 @@
         }
 
         // ============================================================
-        // FETCH DATA DARI REPO
+        // FETCH DATA DARI GIST
         // ============================================================
         async function fetchAccounts() {
             try {
-                const res = await fetch(DATA_URL + '?t=' + Date.now());
+                const res = await fetch(GIST_URL);
                 if (!res.ok) throw new Error('Gagal fetch data');
                 const data = await res.json();
-                return data.accounts || {};
+                const content = data.files['data.json'].content;
+                return JSON.parse(content).accounts || {};
             } catch (e) {
                 console.warn('Gagal load data:', e);
                 return {};
@@ -522,14 +522,12 @@
                 return;
             }
 
-            // Cek device match
             const deviceId = getDeviceId();
             if (accounts[username].deviceId !== deviceId) {
                 showMsg(loginMsg, '❌ Akun ini terdaftar di device lain! Jika ini kesalahan, hubungi admin.', 'error');
                 return;
             }
 
-            // Login sukses
             sessionStorage.setItem('smxl_user', username);
             sessionStorage.setItem('smxl_role', accounts[username].role || 'Member');
             sessionStorage.setItem('smxl_exp', accounts[username].exp || '0');
@@ -547,4 +545,4 @@
     </script>
 
 </body>
-                        </html>
+</html>
