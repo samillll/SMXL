@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SMXL - Login</title>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ========== RESET & GLOBAL ========== */
         * {
             margin: 0;
             padding: 0;
@@ -27,7 +25,6 @@
             position: relative;
         }
 
-        /* Animated background glow */
         body::before {
             content: '';
             position: fixed;
@@ -46,8 +43,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ========== LOGIN CONTAINER ========== */
-        .login-wrapper {
+        .wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
@@ -55,7 +51,7 @@
             padding: 20px;
         }
 
-        .login-card {
+        .card {
             background: rgba(16, 16, 16, 0.85);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -63,18 +59,16 @@
             border-radius: 32px;
             padding: 48px 40px 40px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 107, 0, 0.05);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .login-card:hover {
+        .card:hover {
             transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 80px rgba(255, 107, 0, 0.08);
         }
 
-        /* ========== LOGO ========== */
         .logo-area {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 28px;
         }
 
         .logo-icon {
@@ -105,10 +99,104 @@
             margin-top: 4px;
         }
 
-        /* ========== INPUT ========== */
+        /* ===== VERIFIKASI JEMPOL ===== */
+        .verif-section {
+            margin: 18px 0 24px;
+            text-align: center;
+        }
+
+        .verif-section .verif-label {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .fingerprint-btn {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.06);
+            border: 2px solid rgba(255, 107, 0, 0.15);
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            user-select: none;
+        }
+
+        .fingerprint-btn:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: rgba(255, 107, 0, 0.08);
+        }
+
+        .fingerprint-btn.active {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.15);
+            color: #ff6b00;
+            box-shadow: 0 0 60px rgba(255, 107, 0, 0.15);
+            animation: pulse 1s ease infinite;
+        }
+
+        .fingerprint-btn.verified {
+            border-color: #00c853;
+            background: rgba(0, 200, 83, 0.12);
+            color: #00c853;
+            box-shadow: 0 0 60px rgba(0, 200, 83, 0.1);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .fingerprint-btn .progress-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #ff6b00;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fingerprint-btn.active .progress-ring {
+            opacity: 1;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .verif-status {
+            margin-top: 12px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.25);
+            transition: color 0.3s ease;
+            min-height: 20px;
+        }
+
+        .verif-status.success {
+            color: #00c853;
+        }
+
+        .verif-status.fail {
+            color: #ff4444;
+        }
+
         .input-group {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
         .input-group .input-icon {
@@ -116,130 +204,154 @@
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.2);
             font-size: 16px;
             transition: color 0.3s ease;
+            pointer-events: none;
         }
 
         .input-group input {
             width: 100%;
-            padding: 16px 20px 16px 48px;
+            padding: 14px 20px 14px 48px;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
             color: #fff;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
             outline: none;
+            font-family: 'Inter', sans-serif;
         }
 
         .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.15);
             font-weight: 400;
         }
 
         .input-group input:focus {
             border-color: #ff6b00;
-            background: rgba(255, 107, 0, 0.06);
-            box-shadow: 0 0 30px rgba(255, 107, 0, 0.06);
-        }
-
-        .input-group input:focus+.input-icon,
-        .input-group input:focus~.input-icon {
-            color: #ff6b00;
+            background: rgba(255, 107, 0, 0.05);
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.05);
         }
 
         .input-group input:focus~.input-icon {
             color: #ff6b00;
         }
 
-        /* Fix icon position */
-        .input-group .input-icon {
-            pointer-events: none;
-        }
-
-        /* ========== BUTTON ========== */
-        .btn-login {
+        .btn-primary {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background: linear-gradient(135deg, #ff6b00, #e65c00);
             border: none;
-            border-radius: 16px;
+            border-radius: 14px;
             color: #fff;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 1px;
-            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
         }
 
-        .btn-login:hover {
+        .btn-primary:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.35);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3);
         }
 
-        .btn-login:active {
+        .btn-primary:active {
             transform: scale(0.97);
         }
 
-        .btn-login .btn-icon {
-            margin-right: 10px;
+        .btn-primary .btn-icon {
+            margin-right: 8px;
         }
 
-        /* ========== FOOTER ========== */
-        .login-footer {
+        .msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .msg.show {
+            display: flex;
+        }
+
+        .msg.error {
+            background: rgba(255, 68, 68, 0.08);
+            border: 1px solid rgba(255, 68, 68, 0.12);
+            color: #ff4444;
+        }
+
+        .msg.success {
+            background: rgba(0, 200, 83, 0.08);
+            border: 1px solid rgba(0, 200, 83, 0.12);
+            color: #00c853;
+        }
+
+        .footer {
             text-align: center;
-            margin-top: 24px;
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 12px;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.12);
+            font-size: 11px;
             letter-spacing: 1px;
         }
 
-        .login-footer span {
+        .footer span {
             color: #ff6b00;
             font-weight: 600;
         }
 
-        /* ========== ERROR ========== */
-        .error-msg {
-            color: #ff4444;
-            font-size: 13px;
+        .footer .note {
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 10px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .register-link {
             text-align: center;
-            margin-top: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            background: rgba(255, 68, 68, 0.08);
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 68, 68, 0.15);
+            margin-top: 14px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.2);
         }
 
-        .error-msg.show {
-            opacity: 1;
+        .register-link a {
+            color: #ff6b00;
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        /* ========== RESPONSIVE ========== */
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 480px) {
-            .login-card {
-                padding: 32px 24px 28px;
+            .card {
+                padding: 32px 20px 28px;
                 border-radius: 24px;
             }
             .logo-area h1 {
                 font-size: 26px;
+            }
+            .fingerprint-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="login-wrapper">
-        <div class="login-card">
+    <div class="wrapper">
+        <div class="card">
 
-            <!-- LOGO -->
             <div class="logo-area">
                 <div class="logo-icon">
                     <i class="fas fa-bolt"></i>
@@ -248,30 +360,44 @@
                 <div class="subtitle">Super Max Level</div>
             </div>
 
-            <!-- FORM -->
+            <!-- ===== VERIFIKASI JEMPOL ===== -->
+            <div class="verif-section">
+                <span class="verif-label">
+                    <i class="fas fa-fingerprint"></i> Verifikasi
+                </span>
+                <div class="fingerprint-btn" id="fingerprintBtn">
+                    <i class="fas fa-fingerprint"></i>
+                    <div class="progress-ring"></div>
+                </div>
+                <div class="verif-status" id="verifStatus">Scan jempol untuk verifikasi</div>
+            </div>
+
+            <!-- FORM LOGIN -->
             <form id="loginForm" autocomplete="off">
                 <div class="input-group">
                     <i class="fas fa-user input-icon"></i>
-                    <input type="text" id="username" placeholder="Masukan Username" required />
+                    <input type="text" id="loginUsername" placeholder="Masukan Username" required />
                 </div>
-
                 <div class="input-group">
                     <i class="fas fa-lock input-icon"></i>
-                    <input type="password" id="password" placeholder="Masukan Password" required />
+                    <input type="password" id="loginPassword" placeholder="Masukan Password" required />
                 </div>
-
-                <button type="submit" class="btn-login">
+                <button type="submit" class="btn-primary">
                     <i class="fas fa-sign-in-alt btn-icon"></i> LOGIN
                 </button>
-
-                <div id="errorMsg" class="error-msg">
-                    <i class="fas fa-exclamation-circle"></i> Username atau Password salah!
-                </div>
+                <div class="msg" id="loginMsg"></div>
             </form>
 
-            <!-- FOOTER -->
-            <div class="login-footer">
+            <div class="register-link">
+                Belum punya akun? <a href="https://REPO-BUYER-URL/index.html" target="_blank">Buat di sini</a>
+            </div>
+
+            <div class="footer">
                 <i class="fas fa-code"></i> created by <span>SAMIL</span>
+                <div class="note">
+                    <i class="fas fa-info-circle"></i> Username & password bersifat pribadi, jangan disebar.
+                    Jika disebarkan, akun akan diblokir.
+                </div>
             </div>
 
         </div>
@@ -279,54 +405,167 @@
 
     <script>
         // ============================================================
-        // LOGIN HANDLER
+        // KONFIGURASI
         // ============================================================
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+
+        // GANTI URL INI DENGAN REPO DATA LO!
+        const DATA_URL = 'https://gist.githubusercontent.com/username/xxxxx/raw/data.json';
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        let isVerified = false;
+        let holdInterval = null;
+        let holdDuration = 0;
+        const REQUIRED_HOLD = 3000; // 3 detik
+
+        // ============================================================
+        // REFS
+        // ============================================================
+        const fingerprintBtn = document.getElementById('fingerprintBtn');
+        const verifStatus = document.getElementById('verifStatus');
+        const loginForm = document.getElementById('loginForm');
+        const loginMsg = document.getElementById('loginMsg');
+
+        // ============================================================
+        // FINGERPRINT HOLD (3 DETIK)
+        // ============================================================
+        fingerprintBtn.addEventListener('mousedown', startHold);
+        fingerprintBtn.addEventListener('touchstart', startHold);
+        fingerprintBtn.addEventListener('mouseup', endHold);
+        fingerprintBtn.addEventListener('touchend', endHold);
+        fingerprintBtn.addEventListener('mouseleave', endHold);
+
+        function startHold(e) {
+            e.preventDefault();
+            if (isVerified) return;
+
+            holdDuration = 0;
+            fingerprintBtn.classList.add('active');
+            verifStatus.textContent = '⏳ Tahan jempol... 0%';
+            verifStatus.className = 'verif-status';
+
+            holdInterval = setInterval(() => {
+                holdDuration += 100;
+                const progress = Math.min(100, Math.round((holdDuration / REQUIRED_HOLD) * 100));
+                verifStatus.textContent = `⏳ Tahan jempol... ${progress}%`;
+
+                if (holdDuration >= REQUIRED_HOLD) {
+                    clearInterval(holdInterval);
+                    holdInterval = null;
+                    verifySuccess();
+                }
+            }, 100);
+        }
+
+        function endHold(e) {
+            if (isVerified) return;
+            if (holdInterval) {
+                clearInterval(holdInterval);
+                holdInterval = null;
+            }
+            fingerprintBtn.classList.remove('active');
+            if (!isVerified) {
+                verifStatus.textContent = '❌ Scan gagal! Coba lagi.';
+                verifStatus.className = 'verif-status fail';
+                setTimeout(() => {
+                    verifStatus.textContent = 'Scan jempol untuk verifikasi';
+                    verifStatus.className = 'verif-status';
+                }, 2000);
+            }
+        }
+
+        function verifySuccess() {
+            isVerified = true;
+            fingerprintBtn.classList.remove('active');
+            fingerprintBtn.classList.add('verified');
+            verifStatus.textContent = '✅ Verifikasi berhasil! Silahkan login.';
+            verifStatus.className = 'verif-status success';
+        }
+
+        // ============================================================
+        // FETCH DATA DARI REPO
+        // ============================================================
+        async function fetchAccounts() {
+            try {
+                const res = await fetch(DATA_URL + '?t=' + Date.now());
+                if (!res.ok) throw new Error('Gagal fetch data');
+                const data = await res.json();
+                return data.accounts || {};
+            } catch (e) {
+                console.warn('Gagal load data:', e);
+                return {};
+            }
+        }
+
+        // ============================================================
+        // GET DEVICE ID
+        // ============================================================
+        function getDeviceId() {
+            let id = localStorage.getItem('smxl_device_id');
+            if (!id) {
+                id = 'DEV_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+                localStorage.setItem('smxl_device_id', id);
+            }
+            return id;
+        }
+
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const errorEl = document.getElementById('errorMsg');
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
 
-            // Validasi sederhana
-            if (username === '' || password === '') {
-                errorEl.textContent = '⚠️ Username dan Password harus diisi!';
-                errorEl.classList.add('show');
+            loginMsg.classList.remove('show');
+
+            if (!isVerified) {
+                showMsg(loginMsg, '❌ Verifikasi jempol dulu!', 'error');
                 return;
             }
 
-            // Cek kredensial
-            if (username === 'admin' && password === 'admin123') {
-                // Simpan ke session storage
-                sessionStorage.setItem('smxl_user', username);
-                sessionStorage.setItem('smxl_role', 'Administrator');
-                sessionStorage.setItem('smxl_exp', '12,847');
-
-                // Redirect ke dashboard
-                window.location.href = 'dashboard.html';
-            } else if (username === 'user' && password === 'user123') {
-                sessionStorage.setItem('smxl_user', username);
-                sessionStorage.setItem('smxl_role', 'Member');
-                sessionStorage.setItem('smxl_exp', '3,421');
-
-                window.location.href = 'dashboard.html';
-            } else if (username === 'samil' && password === 'samil123') {
-                sessionStorage.setItem('smxl_user', username);
-                sessionStorage.setItem('smxl_role', 'Developer');
-                sessionStorage.setItem('smxl_exp', '99,999');
-
-                window.location.href = 'dashboard.html';
-            } else {
-                errorEl.textContent = '❌ Username atau Password salah!';
-                errorEl.classList.add('show');
-
-                // Sembunyikan error setelah 3 detik
-                setTimeout(() => {
-                    errorEl.classList.remove('show');
-                }, 3000);
+            if (!username || !password) {
+                showMsg(loginMsg, '❌ Username & Password harus diisi!', 'error');
+                return;
             }
+
+            const accounts = await fetchAccounts();
+
+            if (!accounts[username]) {
+                showMsg(loginMsg, '❌ Akun tidak ditemukan!', 'error');
+                return;
+            }
+
+            if (accounts[username].password !== password) {
+                showMsg(loginMsg, '❌ Password salah!', 'error');
+                return;
+            }
+
+            // Cek device match
+            const deviceId = getDeviceId();
+            if (accounts[username].deviceId !== deviceId) {
+                showMsg(loginMsg, '❌ Akun ini terdaftar di device lain! Jika ini kesalahan, hubungi admin.', 'error');
+                return;
+            }
+
+            // Login sukses
+            sessionStorage.setItem('smxl_user', username);
+            sessionStorage.setItem('smxl_role', accounts[username].role || 'Member');
+            sessionStorage.setItem('smxl_exp', accounts[username].exp || '0');
+
+            window.location.href = 'dashboard.html';
         });
+
+        // ============================================================
+        // UTILITY
+        // ============================================================
+        function showMsg(el, text, type) {
+            el.textContent = text;
+            el.className = 'msg show ' + type;
+        }
     </script>
 
 </body>
-</html>
+                    </html>
