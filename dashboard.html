@@ -4,10 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SMXL - Dashboard</title>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ========== RESET & GLOBAL ========== */
+        /* ===== DISABLE COPY ===== */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -22,11 +35,12 @@
             min-height: 100vh;
             color: #fff;
             overflow-x: hidden;
+            padding-bottom: 80px;
         }
 
-        /* ========== SCROLLBAR ========== */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: #0a0a0a;
@@ -36,32 +50,24 @@
             border-radius: 20px;
         }
 
-        /* ========== DASHBOARD WRAPPER ========== */
         .dash-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px 20px 60px;
+            max-width: 100%;
+            padding: 20px 16px 80px;
         }
 
-        /* ========== HEADER ========== */
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0 24px;
-            border-bottom: 1px solid rgba(255, 107, 0, 0.12);
+            padding: 12px 0 16px;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.08);
             flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .header-left .brand {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
             background: linear-gradient(135deg, #ff6b00, #ff8c38);
             -webkit-background-clip: text;
@@ -78,56 +84,51 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 14px;
         }
 
         .user-badge {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background: rgba(255, 255, 255, 0.04);
-            padding: 8px 18px 8px 14px;
+            padding: 6px 14px 6px 10px;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .user-badge .avatar {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ff6b00, #e65c00);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             color: #fff;
         }
 
         .user-badge .user-info {
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .user-badge .user-info .name {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .user-badge .user-info .role {
-            font-size: 11px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.35);
-        }
-
-        .user-badge .user-info .exp {
-            font-size: 11px;
-            color: #ff6b00;
         }
 
         .btn-logout {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.4);
-            padding: 10px 16px;
+            color: rgba(255, 255, 255, 0.3);
+            padding: 8px 12px;
             border-radius: 40px;
             cursor: pointer;
             font-size: 14px;
@@ -140,69 +141,40 @@
             color: #ff4444;
         }
 
-        /* ========== VIDEO BACKGROUND SECTION ========== */
+        /* ===== VIDEO ===== */
         .video-section {
-            position: relative;
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
-            margin: 28px 0 32px;
+            margin: 16px 0 20px;
             background: #111;
-            aspect-ratio: 16 / 7;
-            min-height: 220px;
+            aspect-ratio: 16 / 9;
+            max-height: 320px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 107, 0, 0.08);
+            border: 1px solid rgba(255, 107, 0, 0.06);
         }
 
         .video-section video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.6;
         }
 
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.5), rgba(10, 10, 10, 0.7));
-            padding: 20px;
-        }
-
-        .video-overlay h2 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .video-overlay h2 span {
-            color: #ff6b00;
-        }
-
-        .video-overlay p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        /* ========== WELCOME BANNER ========== */
+        /* ===== WELCOME ===== */
         .welcome-banner {
-            background: linear-gradient(135deg, rgba(255, 107, 0, 0.08), rgba(255, 107, 0, 0.02));
-            border: 1px solid rgba(255, 107, 0, 0.08);
-            border-radius: 20px;
-            padding: 20px 28px;
-            margin-bottom: 32px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.06), rgba(255, 107, 0, 0.01));
+            border: 1px solid rgba(255, 107, 0, 0.06);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .welcome-banner .greeting {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
@@ -210,271 +182,239 @@
             color: #ff6b00;
         }
 
-        .welcome-banner .stats {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .welcome-banner .stats .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 13px;
-        }
-
-        .welcome-banner .stats .stat-item i {
-            color: #ff6b00;
-            width: 18px;
-        }
-
-        .welcome-banner .stats .stat-item strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* ========== JADWAL SHOLAT ========== */
+        /* ===== JADWAL SHOLAT (HORIZONTAL SCROLL) ===== */
         .sholat-section {
-            margin-bottom: 36px;
+            margin-bottom: 24px;
         }
 
         .sholat-section .section-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, 0.8);
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .sholat-section .section-title i {
             color: #ff6b00;
         }
 
-        .sholat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        .sholat-scroll {
+            display: flex;
             gap: 12px;
+            overflow-x: auto;
+            padding: 6px 4px 12px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sholat-scroll::-webkit-scrollbar {
+            height: 3px;
+        }
+        .sholat-scroll::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 20px;
         }
 
         .sholat-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-width: 130px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 18px 14px;
             text-align: center;
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: transform 0.3s ease;
+            cursor: default;
+            pointer-events: none;
+            user-select: none;
         }
 
-        .sholat-item::before {
-            content: '';
+        .sholat-item .sholat-bg {
             position: absolute;
             inset: 0;
-            background: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=200&h=200&fit=crop&crop=center') center/cover no-repeat;
-            opacity: 0.08;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
             filter: blur(2px);
             transition: opacity 0.4s ease;
         }
 
-        .sholat-item:nth-child(2)::before {
-            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=200&h=200&fit=crop&crop=center');
-        }
-        .sholat-item:nth-child(3)::before {
-            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=200&h=200&fit=crop&crop=center');
-        }
-        .sholat-item:nth-child(4)::before {
-            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=200&h=200&fit=crop&crop=center');
-        }
-        .sholat-item:nth-child(5)::before {
-            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=200&h=200&fit=crop&crop=center');
-        }
-
-        .sholat-item:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 107, 0, 0.2);
-            background: rgba(255, 107, 0, 0.04);
-        }
-
-        .sholat-item:hover::before {
-            opacity: 0.15;
-        }
-
-        .sholat-item .sholat-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
+        .sholat-item .sholat-content {
             position: relative;
             z-index: 1;
-            letter-spacing: 0.5px;
-        }
-
-        .sholat-item .sholat-time {
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            position: relative;
-            z-index: 1;
-            margin-top: 4px;
         }
 
         .sholat-item .sholat-icon {
-            font-size: 22px;
+            font-size: 20px;
             color: #ff6b00;
-            position: relative;
-            z-index: 1;
+            opacity: 0.5;
             margin-bottom: 4px;
-            opacity: 0.4;
         }
 
-        /* ========== MENU GRID ========== */
-        .menu-section .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .menu-section .section-title i {
-            color: #ff6b00;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-
-        .menu-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 28px 20px 24px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 107, 0, 0.05), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 107, 0, 0.2);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .menu-card:hover::after {
-            opacity: 1;
-        }
-
-        .menu-card .menu-icon {
-            font-size: 32px;
-            color: #ff6b00;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-card .menu-name {
-            font-size: 15px;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-card .menu-desc {
+        .sholat-item .sholat-name {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.25);
-            margin-top: 4px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-card .menu-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 107, 0, 0.15);
-            color: #ff6b00;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
             letter-spacing: 0.5px;
-            z-index: 1;
+            text-transform: uppercase;
         }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
+        .sholat-item .sholat-time {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        /* Background masjid berbeda */
+        .sholat-item:nth-child(1) .sholat-bg {
+            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=300&h=400&fit=crop&crop=center');
+        }
+        .sholat-item:nth-child(2) .sholat-bg {
+            background-image: url('https://images.unsplash.com/photo-1564770553735-199c7eb2db1a?w=300&h=400&fit=crop&crop=center');
+        }
+        .sholat-item:nth-child(3) .sholat-bg {
+            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=300&h=400&fit=crop&crop=center');
+        }
+        .sholat-item:nth-child(4) .sholat-bg {
+            background-image: url('https://images.unsplash.com/photo-1564770553735-199c7eb2db1a?w=300&h=400&fit=crop&crop=center');
+        }
+        .sholat-item:nth-child(5) .sholat-bg {
+            background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=300&h=400&fit=crop&crop=center');
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 107, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0 env(safe-area-inset-bottom);
+            z-index: 999;
+            height: 68px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #ff6b00;
+        }
+
+        .nav-item.active i {
+            transform: translateY(-2px);
+        }
+
+        .nav-item:hover {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item .nav-badge {
+            position: absolute;
+            top: 0;
+            right: 4px;
+            background: #ff6b00;
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 20px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .dash-wrapper {
+                padding: 12px 12px 80px;
             }
-            .header-right {
-                justify-content: space-between;
-            }
-            .welcome-banner {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            .welcome-banner .stats {
-                justify-content: center;
-            }
-            .video-section {
-                aspect-ratio: 16 / 9;
-                min-height: 160px;
-            }
-            .video-overlay h2 {
+            .header-left .brand {
                 font-size: 20px;
             }
-            .sholat-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .user-badge .user-info .name {
+                font-size: 12px;
             }
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .sholat-item {
+                min-width: 110px;
+                padding: 14px 10px;
             }
-        }
-
-        @media (max-width: 480px) {
-            .sholat-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .sholat-item .sholat-time {
+                font-size: 18px;
             }
-            .menu-grid {
-                grid-template-columns: 1fr 1fr;
+            .video-section {
+                max-height: 200px;
             }
-            .user-badge .user-info .exp {
-                font-size: 10px;
+            .bottom-nav {
+                height: 60px;
+                padding: 4px 0 env(safe-area-inset-bottom);
+            }
+            .nav-item {
+                font-size: 9px;
+                padding: 2px 10px;
+            }
+            .nav-item i {
+                font-size: 18px;
             }
         }
     </style>
+
+    <!-- ===== DISABLE RIGHT CLICK & COPY ===== -->
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </head>
 <body>
 
     <div class="dash-wrapper">
 
-        <!-- ========== HEADER ========== -->
+        <!-- ===== HEADER ===== -->
         <header class="header">
             <div class="header-left">
                 <div class="brand">
@@ -485,9 +425,8 @@
                 <div class="user-badge">
                     <div class="avatar" id="avatarLetter">A</div>
                     <div class="user-info">
-                        <div class="name" id="displayName">Admin</div>
-                        <div class="role" id="displayRole">Administrator</div>
-                        <div class="exp"><i class="fas fa-star"></i> EXP: <span id="displayExp">0</span></div>
+                        <div class="name" id="displayName">User</div>
+                        <div class="role" id="displayRole">Member</div>
                     </div>
                 </div>
                 <button class="btn-logout" onclick="logout()">
@@ -496,154 +435,111 @@
             </div>
         </header>
 
-        <!-- ========== VIDEO SECTION ========== -->
+        <!-- ===== VIDEO ===== -->
         <div class="video-section">
             <video autoplay muted loop playsinline>
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                <source src="https://videotourl.com/videos/1788443089047-cab6adc6-7b2c-4a53-bb05-50e7714a1f27.mp4" type="video/mp4" />
             </video>
-            <div class="video-overlay">
-                <h2>Welcome to <span>SMXL</span></h2>
-                <p><i class="fas fa-code"></i> Powered by SAMIL</p>
-            </div>
         </div>
 
-        <!-- ========== WELCOME BANNER ========== -->
+        <!-- ===== WELCOME ===== -->
         <div class="welcome-banner">
             <div class="greeting">
                 <i class="fas fa-hand-wave" style="color:#ff6b00;margin-right:8px;"></i>
                 Welcome, <span id="welcomeName">User</span>
             </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-user-tag"></i> Role: <strong id="statRole">-</strong>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-star"></i> EXP: <strong id="statExp">0</strong>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-clock"></i> <span id="statTime">00:00</span>
-                </div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.3);">
+                <i class="fas fa-user-tag"></i> <span id="welcomeRole">Member</span>
             </div>
         </div>
 
-        <!-- ========== JADWAL SHOLAT ========== -->
+        <!-- ===== JADWAL SHOLAT (HORIZONTAL SCROLL) ===== -->
         <div class="sholat-section">
             <div class="section-title">
                 <i class="fas fa-mosque"></i> Jadwal Sholat
-                <span style="font-weight:400;color:rgba(255,255,255,0.2);font-size:12px;">WIB</span>
+                <span style="font-weight:400;color:rgba(255,255,255,0.15);font-size:11px;">WIB</span>
             </div>
-            <div class="sholat-grid">
+            <div class="sholat-scroll" id="sholatScroll">
                 <div class="sholat-item">
-                    <div class="sholat-icon"><i class="fas fa-cloud-sun"></i></div>
-                    <div class="sholat-name">Subuh</div>
-                    <div class="sholat-time" id="timeSubuh">04:30</div>
-                </div>
-                <div class="sholat-item">
-                    <div class="sholat-icon"><i class="fas fa-sun"></i></div>
-                    <div class="sholat-name">Zuhur</div>
-                    <div class="sholat-time" id="timeZuhur">12:00</div>
+                    <div class="sholat-bg"></div>
+                    <div class="sholat-content">
+                        <div class="sholat-icon"><i class="fas fa-cloud-sun"></i></div>
+                        <div class="sholat-name">Subuh</div>
+                        <div class="sholat-time" id="timeSubuh">04:30</div>
+                    </div>
                 </div>
                 <div class="sholat-item">
-                    <div class="sholat-icon"><i class="fas fa-sun"></i></div>
-                    <div class="sholat-name">Ashar</div>
-                    <div class="sholat-time" id="timeAshar">15:30</div>
+                    <div class="sholat-bg"></div>
+                    <div class="sholat-content">
+                        <div class="sholat-icon"><i class="fas fa-sun"></i></div>
+                        <div class="sholat-name">Zuhur</div>
+                        <div class="sholat-time" id="timeZuhur">12:00</div>
+                    </div>
                 </div>
                 <div class="sholat-item">
-                    <div class="sholat-icon"><i class="fas fa-moon"></i></div>
-                    <div class="sholat-name">Maghrib</div>
-                    <div class="sholat-time" id="timeMaghrib">18:00</div>
+                    <div class="sholat-bg"></div>
+                    <div class="sholat-content">
+                        <div class="sholat-icon"><i class="fas fa-sun"></i></div>
+                        <div class="sholat-name">Ashar</div>
+                        <div class="sholat-time" id="timeAshar">15:30</div>
+                    </div>
                 </div>
                 <div class="sholat-item">
-                    <div class="sholat-icon"><i class="fas fa-moon"></i></div>
-                    <div class="sholat-name">Isya</div>
-                    <div class="sholat-time" id="timeIsya">19:30</div>
+                    <div class="sholat-bg"></div>
+                    <div class="sholat-content">
+                        <div class="sholat-icon"><i class="fas fa-moon"></i></div>
+                        <div class="sholat-name">Maghrib</div>
+                        <div class="sholat-time" id="timeMaghrib">18:00</div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- ========== MENU ========== -->
-        <div class="menu-section">
-            <div class="section-title">
-                <i class="fas fa-th-large"></i> Menu
-            </div>
-            <div class="menu-grid">
-
-                <!-- BUG -->
-                <div class="menu-card" onclick="menuAction('bug')">
-                    <span class="menu-badge">NEW</span>
-                    <div class="menu-icon"><i class="fas fa-bug"></i></div>
-                    <div class="menu-name">BUG</div>
-                    <div class="menu-desc">Lapor & cek bug</div>
+                <div class="sholat-item">
+                    <div class="sholat-bg"></div>
+                    <div class="sholat-content">
+                        <div class="sholat-icon"><i class="fas fa-moon"></i></div>
+                        <div class="sholat-name">Isya</div>
+                        <div class="sholat-time" id="timeIsya">19:30</div>
+                    </div>
                 </div>
-
-                <!-- DOWNLOADER -->
-                <div class="menu-card" onclick="menuAction('downloader')">
-                    <span class="menu-badge">HOT</span>
-                    <div class="menu-icon"><i class="fas fa-download"></i></div>
-                    <div class="menu-name">DOWNLOADER</div>
-                    <div class="menu-desc">Media & file download</div>
-                </div>
-
-                <!-- TRACKER -->
-                <div class="menu-card" onclick="menuAction('tracker')">
-                    <span class="menu-badge">LIVE</span>
-                    <div class="menu-icon"><i class="fas fa-map-pin"></i></div>
-                    <div class="menu-name">TRACKER</div>
-                    <div class="menu-desc">Lacak status & lokasi</div>
-                </div>
-
-                <!-- SENDER -->
-                <div class="menu-card" onclick="menuAction('sender')">
-                    <span class="menu-badge">PRO</span>
-                    <div class="menu-icon"><i class="fas fa-paper-plane"></i></div>
-                    <div class="menu-name">SENDER</div>
-                    <div class="menu-desc">Kirim pesan massal</div>
-                </div>
-
             </div>
         </div>
 
     </div>
 
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="navAction('home')" id="navHome">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" onclick="navAction('qris')" id="navQris">
+            <i class="fas fa-qrcode"></i>
+            <span>Qris</span>
+            <span class="nav-badge">NEW</span>
+        </button>
+        <button class="nav-item" onclick="navAction('settings')" id="navSettings">
+            <i class="fas fa-cog"></i>
+            <span>Setting</span>
+        </button>
+    </nav>
+
     <script>
         // ============================================================
-        // LOAD DATA DARI SESSION STORAGE
+        // LOAD USER DATA
         // ============================================================
         function loadUserData() {
             const username = sessionStorage.getItem('smxl_user');
-            const role = sessionStorage.getItem('smxl_role');
-            const exp = sessionStorage.getItem('smxl_exp');
+            const role = sessionStorage.getItem('smxl_role') || 'Member';
 
             if (!username) {
-                // Redirect ke login kalo ga ada session
                 window.location.href = 'index.html';
                 return;
             }
 
-            // Tampilkan di berbagai tempat
             document.getElementById('displayName').textContent = username;
             document.getElementById('displayRole').textContent = role;
-            document.getElementById('displayExp').textContent = exp;
-
             document.getElementById('welcomeName').textContent = username;
-            document.getElementById('statRole').textContent = role;
-            document.getElementById('statExp').textContent = exp;
-
-            // Avatar huruf pertama
+            document.getElementById('welcomeRole').textContent = role;
             document.getElementById('avatarLetter').textContent = username.charAt(0).toUpperCase();
-
-            // Update waktu
-            updateClock();
-            setInterval(updateClock, 1000);
-        }
-
-        // ============================================================
-        // CLOCK
-        // ============================================================
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('statTime').textContent = timeStr;
         }
 
         // ============================================================
@@ -655,31 +551,33 @@
         }
 
         // ============================================================
-        // MENU ACTION
+        // NAVIGATION
         // ============================================================
-        function menuAction(menu) {
-            const menuNames = {
-                bug: '🐛 BUG',
-                downloader: '⬇️ DOWNLOADER',
-                tracker: '📍 TRACKER',
-                sender: '📨 SENDER'
-            };
+        function navAction(target) {
+            // Reset semua nav
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-            alert(`🔧 Menu "${menuNames[menu] || menu}" sedang dalam pengembangan!\n\nFitur akan segera hadir.`);
-
-            // Log ke console buat developer
-            console.log(`[MENU] ${menu} diakses oleh ${sessionStorage.getItem('smxl_user')}`);
+            // Aktifkan yang diklik
+            if (target === 'home') {
+                document.getElementById('navHome').classList.add('active');
+                alert('🏠 Anda berada di halaman Home');
+            } else if (target === 'qris') {
+                document.getElementById('navQris').classList.add('active');
+                alert('📱 Fitur QRIS akan segera hadir!');
+            } else if (target === 'settings') {
+                document.getElementById('navSettings').classList.add('active');
+                alert('⚙️ Halaman Setting sedang dalam pengembangan.');
+            }
         }
 
         // ============================================================
-        // JADWAL SHOLAT (Simulasi WIB)
+        // JADWAL SHOLAT
         // ============================================================
         function updateSholatTimes() {
             const now = new Date();
             const hours = now.getHours();
             const mins = now.getMinutes();
 
-            // Waktu sholat (WIB) - bisa diganti pake API nanti
             const times = {
                 subuh: '04:30',
                 zuhur: '12:00',
@@ -688,14 +586,12 @@
                 isya: '19:30'
             };
 
-            // Tampilkan
             document.getElementById('timeSubuh').textContent = times.subuh;
             document.getElementById('timeZuhur').textContent = times.zuhur;
             document.getElementById('timeAshar').textContent = times.ashar;
             document.getElementById('timeMaghrib').textContent = times.maghrib;
             document.getElementById('timeIsya').textContent = times.isya;
 
-            // Highlight waktu yang sudah lewat
             const currentTime = hours * 60 + mins;
             const sholatTimes = [
                 { id: 'timeSubuh', time: 4 * 60 + 30 },
@@ -710,7 +606,7 @@
                 if (currentTime >= s.time) {
                     el.style.color = '#ff6b00';
                 } else {
-                    el.style.color = '#fff';
+                    el.style.color = '#ffffff';
                 }
             });
         }
@@ -720,11 +616,9 @@
         // ============================================================
         loadUserData();
         updateSholatTimes();
-
-        // Update sholat tiap menit
         setInterval(updateSholatTimes, 60000);
 
-        // Cegah akses via back button setelah logout
+        // Cegah back setelah logout
         window.addEventListener('pageshow', function(e) {
             if (e.persisted) {
                 const user = sessionStorage.getItem('smxl_user');
@@ -736,4 +630,4 @@
     </script>
 
 </body>
-  </html>
+                                                                           </html>
