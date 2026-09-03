@@ -6,8 +6,36 @@
     <title>SMXL - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* ===== NONAKTIFKAN COPY ===== */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* ===== NONAKTIFKAN TEXT SELECTION ===== */
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         body {
             font-family: 'Inter', sans-serif;
             background: #0a0a0a;
@@ -18,6 +46,7 @@
             overflow: hidden;
             position: relative;
         }
+
         body::before {
             content: '';
             position: fixed;
@@ -30,8 +59,20 @@
             animation: rotateGlow 20s linear infinite;
             z-index: 0;
         }
-        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .wrapper { position: relative; z-index: 1; width: 100%; max-width: 420px; padding: 20px; }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
         .card {
             background: rgba(16, 16, 16, 0.85);
             backdrop-filter: blur(24px);
@@ -42,8 +83,16 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 107, 0, 0.05);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .card:hover { transform: translateY(-4px) scale(1.01); }
-        .logo-area { text-align: center; margin-bottom: 28px; }
+
+        .card:hover {
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
         .logo-icon {
             font-size: 48px;
             color: #ff6b00;
@@ -54,6 +103,7 @@
             margin-bottom: 12px;
             box-shadow: 0 0 40px rgba(255, 107, 0, 0.1);
         }
+
         .logo-area h1 {
             font-size: 32px;
             font-weight: 900;
@@ -62,6 +112,7 @@
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
         }
+
         .logo-area .subtitle {
             color: rgba(255, 255, 255, 0.35);
             font-size: 12px;
@@ -69,7 +120,12 @@
             text-transform: uppercase;
             margin-top: 4px;
         }
-        .verif-section { margin: 18px 0 24px; text-align: center; }
+
+        .verif-section {
+            margin: 18px 0 24px;
+            text-align: center;
+        }
+
         .verif-section .verif-label {
             color: rgba(255, 255, 255, 0.3);
             font-size: 13px;
@@ -79,6 +135,7 @@
             margin-bottom: 12px;
             display: block;
         }
+
         .fingerprint-btn {
             width: 90px;
             height: 90px;
@@ -96,7 +153,12 @@
             position: relative;
             user-select: none;
         }
-        .fingerprint-btn:hover { border-color: rgba(255, 107, 0, 0.3); background: rgba(255, 107, 0, 0.08); }
+
+        .fingerprint-btn:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: rgba(255, 107, 0, 0.08);
+        }
+
         .fingerprint-btn.active {
             border-color: #ff6b00;
             background: rgba(255, 107, 0, 0.15);
@@ -104,6 +166,7 @@
             box-shadow: 0 0 60px rgba(255, 107, 0, 0.15);
             animation: pulse 1s ease infinite;
         }
+
         .fingerprint-btn.verified {
             border-color: #00c853;
             background: rgba(0, 200, 83, 0.12);
@@ -111,7 +174,13 @@
             box-shadow: 0 0 60px rgba(0, 200, 83, 0.1);
             animation: none;
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        @keyframes pulse {
+            0%,
+            100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .fingerprint-btn .progress-ring {
             position: absolute;
             inset: -4px;
@@ -121,8 +190,16 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .fingerprint-btn.active .progress-ring { opacity: 1; animation: spin 1.5s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .fingerprint-btn.active .progress-ring {
+            opacity: 1;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .verif-status {
             margin-top: 12px;
             font-size: 13px;
@@ -130,9 +207,20 @@
             transition: color 0.3s ease;
             min-height: 20px;
         }
-        .verif-status.success { color: #00c853; }
-        .verif-status.fail { color: #ff4444; }
-        .input-group { position: relative; margin-bottom: 14px; }
+
+        .verif-status.success {
+            color: #00c853;
+        }
+
+        .verif-status.fail {
+            color: #ff4444;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
         .input-group .input-icon {
             position: absolute;
             left: 16px;
@@ -143,6 +231,7 @@
             transition: color 0.3s ease;
             pointer-events: none;
         }
+
         .input-group input {
             width: 100%;
             padding: 14px 20px 14px 48px;
@@ -156,13 +245,22 @@
             outline: none;
             font-family: 'Inter', sans-serif;
         }
-        .input-group input::placeholder { color: rgba(255, 255, 255, 0.15); font-weight: 400; }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: 400;
+        }
+
         .input-group input:focus {
             border-color: #ff6b00;
             background: rgba(255, 107, 0, 0.05);
             box-shadow: 0 0 30px rgba(255, 107, 0, 0.05);
         }
-        .input-group input:focus~.input-icon { color: #ff6b00; }
+
+        .input-group input:focus~.input-icon {
+            color: #ff6b00;
+        }
+
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -178,9 +276,20 @@
             letter-spacing: 0.5px;
             margin-top: 4px;
         }
-        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3); }
-        .btn-primary:active { transform: scale(0.97); }
-        .btn-primary .btn-icon { margin-right: 8px; }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary .btn-icon {
+            margin-right: 8px;
+        }
+
         .msg {
             padding: 10px 14px;
             border-radius: 12px;
@@ -190,18 +299,78 @@
             align-items: center;
             gap: 8px;
         }
-        .msg.show { display: flex; }
-        .msg.error { background: rgba(255, 68, 68, 0.08); border: 1px solid rgba(255, 68, 68, 0.12); color: #ff4444; }
-        .msg.success { background: rgba(0, 200, 83, 0.08); border: 1px solid rgba(0, 200, 83, 0.12); color: #00c853; }
-        .footer { text-align: center; margin-top: 20px; color: rgba(255, 255, 255, 0.12); font-size: 11px; letter-spacing: 1px; }
-        .footer span { color: #ff6b00; font-weight: 600; }
-        .footer .note { color: rgba(255, 255, 255, 0.08); font-size: 10px; margin-top: 6px; line-height: 1.5; }
+
+        .msg.show {
+            display: flex;
+        }
+
+        .msg.error {
+            background: rgba(255, 68, 68, 0.08);
+            border: 1px solid rgba(255, 68, 68, 0.12);
+            color: #ff4444;
+        }
+
+        .msg.success {
+            background: rgba(0, 200, 83, 0.08);
+            border: 1px solid rgba(0, 200, 83, 0.12);
+            color: #00c853;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.12);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .footer span {
+            color: #ff6b00;
+            font-weight: 600;
+        }
+
+        .footer .note {
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 10px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
         @media (max-width: 480px) {
-            .card { padding: 32px 20px 28px; border-radius: 24px; }
-            .logo-area h1 { font-size: 26px; }
-            .fingerprint-btn { width: 80px; height: 80px; font-size: 32px; }
+            .card {
+                padding: 32px 20px 28px;
+                border-radius: 24px;
+            }
+            .logo-area h1 {
+                font-size: 26px;
+            }
+            .fingerprint-btn {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
         }
     </style>
+
+    <!-- ===== DISABLE RIGHT CLICK & COPY ===== -->
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+C, Ctrl+U, Ctrl+Shift+I, F12
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -251,13 +420,8 @@
         // KONFIGURASI — GANTI DENGAN PUNYA LO!
         // ============================================================
 
-        // BIN ID — dari JSONBin.io
         const BIN_ID = '6a997430f5f4af5e29658392';
-
-        // API KEY — dari JSONBin.io (WAJIB!)
         const API_KEY = '$2a$10$8qTaNsbZqbnutP413H87y.mP1yzZyY8tfHHzrCWn4PTkWdIOaGBfO';
-
-        // API URL
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
         // ============================================================
@@ -330,14 +494,12 @@
         }
 
         // ============================================================
-        // FETCH DATA DARI JSONBIN (PAKE API KEY!)
+        // FETCH DATA DARI JSONBIN
         // ============================================================
         async function fetchAccounts() {
             try {
                 const res = await fetch(API_URL + '?t=' + Date.now(), {
-                    headers: {
-                        'X-Master-Key': API_KEY
-                    }
+                    headers: { 'X-Master-Key': API_KEY }
                 });
                 if (!res.ok) throw new Error('Gagal fetch data');
                 const data = await res.json();
@@ -401,7 +563,6 @@
 
             sessionStorage.setItem('smxl_user', username);
             sessionStorage.setItem('smxl_role', accounts[username].role || 'Member');
-            sessionStorage.setItem('smxl_exp', accounts[username].exp || '0');
 
             window.location.href = 'dashboard.html';
         });
@@ -412,4 +573,4 @@
         }
     </script>
 </body>
-    </html>
+                        </html>
