@@ -254,6 +254,9 @@
         // BIN ID — dari JSONBin.io
         const BIN_ID = '6a997430f5f4af5e29658392';
 
+        // API KEY — dari JSONBin.io (WAJIB!)
+        const API_KEY = '$2a$10$8qTaNsbZqbnutP413H87y.mP1yzZyY8tfHHzrCWn4PTkWdIOaGBfO';
+
         // API URL
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
@@ -327,11 +330,15 @@
         }
 
         // ============================================================
-        // FETCH DATA DARI JSONBIN
+        // FETCH DATA DARI JSONBIN (PAKE API KEY!)
         // ============================================================
         async function fetchAccounts() {
             try {
-                const res = await fetch(API_URL + '?t=' + Date.now());
+                const res = await fetch(API_URL + '?t=' + Date.now(), {
+                    headers: {
+                        'X-Master-Key': API_KEY
+                    }
+                });
                 if (!res.ok) throw new Error('Gagal fetch data');
                 const data = await res.json();
                 return data.record.accounts || {};
