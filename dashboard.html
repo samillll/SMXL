@@ -20,7 +20,6 @@
             background: transparent;
         }
 
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -52,7 +51,7 @@
 
         .dash-wrapper {
             max-width: 100%;
-            padding: 20px 16px 80px;
+            padding: 16px 16px 80px;
         }
 
         /* ===== HEADER ===== */
@@ -60,14 +59,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0 16px;
+            padding: 8px 0 14px;
             border-bottom: 1px solid rgba(255, 107, 0, 0.08);
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .header-left .brand {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             background: linear-gradient(135deg, #ff6b00, #ff8c38);
             -webkit-background-clip: text;
@@ -84,7 +83,7 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .user-badge {
@@ -141,14 +140,15 @@
             color: #ff4444;
         }
 
-        /* ===== VIDEO ===== */
+        /* ===== VIDEO FULL WIDTH ===== */
         .video-section {
-            border-radius: 20px;
+            width: 100%;
+            border-radius: 16px;
             overflow: hidden;
-            margin: 16px 0 20px;
+            margin: 14px 0 18px;
             background: #111;
             aspect-ratio: 16 / 9;
-            max-height: 320px;
+            max-height: 380px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 107, 0, 0.06);
         }
@@ -164,17 +164,17 @@
             background: linear-gradient(135deg, rgba(255, 107, 0, 0.06), rgba(255, 107, 0, 0.01));
             border: 1px solid rgba(255, 107, 0, 0.06);
             border-radius: 16px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .welcome-banner .greeting {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
         }
 
@@ -182,15 +182,24 @@
             color: #ff6b00;
         }
 
-        /* ===== JADWAL SHOLAT (HORIZONTAL SCROLL) ===== */
+        .welcome-banner .role-badge {
+            font-size: 11px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: rgba(255, 107, 0, 0.1);
+            color: #ff6b00;
+            font-weight: 600;
+        }
+
+        /* ===== JADWAL SHOLAT (SCROLL) ===== */
         .sholat-section {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .sholat-section .section-title {
             font-size: 14px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -205,7 +214,7 @@
             display: flex;
             gap: 12px;
             overflow-x: auto;
-            padding: 6px 4px 12px;
+            padding: 4px 2px 10px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
@@ -219,19 +228,19 @@
         }
 
         .sholat-item {
-            min-width: 130px;
+            min-width: 110px;
             flex-shrink: 0;
             scroll-snap-align: start;
             border-radius: 16px;
-            padding: 18px 14px;
+            padding: 16px 12px;
             text-align: center;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: transform 0.3s ease;
             cursor: default;
             pointer-events: none;
             user-select: none;
+            transition: transform 0.3s;
         }
 
         .sholat-item .sholat-bg {
@@ -239,9 +248,8 @@
             inset: 0;
             background-size: cover;
             background-position: center;
-            opacity: 0.15;
+            opacity: 0.12;
             filter: blur(2px);
-            transition: opacity 0.4s ease;
         }
 
         .sholat-item .sholat-content {
@@ -250,14 +258,14 @@
         }
 
         .sholat-item .sholat-icon {
-            font-size: 20px;
+            font-size: 18px;
             color: #ff6b00;
             opacity: 0.5;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .sholat-item .sholat-name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.5);
             letter-spacing: 0.5px;
@@ -265,7 +273,7 @@
         }
 
         .sholat-item .sholat-time {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             color: #fff;
             margin-top: 2px;
@@ -288,6 +296,187 @@
             background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=300&h=400&fit=crop&crop=center');
         }
 
+        /* ===== BERITA TERKINI (SCROLL) ===== */
+        .berita-section {
+            margin-bottom: 20px;
+        }
+
+        .berita-section .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .berita-section .section-title i {
+            color: #ff6b00;
+        }
+
+        .berita-scroll {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 4px 2px 10px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .berita-scroll::-webkit-scrollbar {
+            height: 3px;
+        }
+        .berita-scroll::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 20px;
+        }
+
+        .berita-item {
+            min-width: 260px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 14px 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .berita-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .berita-item .berita-sumber {
+            font-size: 10px;
+            color: #ff6b00;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .berita-item .berita-sumber i {
+            font-size: 10px;
+        }
+
+        .berita-item .berita-judul {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .berita-item .berita-waktu {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 6px;
+        }
+
+        .berita-item .berita-thumb {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 8px;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .berita-loading {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            padding: 12px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        /* ===== MENU SCROLL ===== */
+        .menu-section {
+            margin-bottom: 10px;
+        }
+
+        .menu-section .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .menu-section .section-title i {
+            color: #ff6b00;
+        }
+
+        .menu-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 2px 10px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .menu-scroll::-webkit-scrollbar {
+            height: 3px;
+        }
+        .menu-scroll::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 20px;
+        }
+
+        .menu-card {
+            min-width: 120px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 20px 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            background: rgba(255, 107, 0, 0.04);
+            border-color: rgba(255, 107, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .menu-card .menu-icon {
+            font-size: 28px;
+            color: #ff6b00;
+            margin-bottom: 6px;
+        }
+
+        .menu-card .menu-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .menu-card .menu-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background: rgba(255, 107, 0, 0.12);
+            color: #ff6b00;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
@@ -303,17 +492,17 @@
             align-items: center;
             padding: 8px 0 env(safe-area-inset-bottom);
             z-index: 999;
-            height: 68px;
+            height: 64px;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 1px;
             color: rgba(255, 255, 255, 0.2);
             text-decoration: none;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
             transition: all 0.3s ease;
             padding: 4px 16px;
@@ -326,7 +515,7 @@
         }
 
         .nav-item i {
-            font-size: 22px;
+            font-size: 20px;
             transition: all 0.3s ease;
         }
 
@@ -348,65 +537,76 @@
             right: 4px;
             background: #ff6b00;
             color: #fff;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 20px;
-            min-width: 16px;
+            min-width: 14px;
             text-align: center;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
             .dash-wrapper {
-                padding: 12px 12px 80px;
+                padding: 10px 10px 80px;
             }
             .header-left .brand {
-                font-size: 20px;
+                font-size: 18px;
             }
             .user-badge .user-info .name {
                 font-size: 12px;
             }
             .sholat-item {
-                min-width: 110px;
-                padding: 14px 10px;
+                min-width: 100px;
+                padding: 12px 10px;
             }
             .sholat-item .sholat-time {
-                font-size: 18px;
+                font-size: 17px;
             }
             .video-section {
-                max-height: 200px;
+                max-height: 220px;
+                border-radius: 12px;
+                margin: 10px 0 14px;
+            }
+            .berita-item {
+                min-width: 220px;
+                padding: 12px 14px;
+            }
+            .berita-item .berita-thumb {
+                height: 60px;
+            }
+            .menu-card {
+                min-width: 100px;
+                padding: 16px 12px;
+            }
+            .menu-card .menu-icon {
+                font-size: 22px;
             }
             .bottom-nav {
-                height: 60px;
+                height: 56px;
                 padding: 4px 0 env(safe-area-inset-bottom);
             }
             .nav-item {
-                font-size: 9px;
+                font-size: 8px;
                 padding: 2px 10px;
             }
             .nav-item i {
-                font-size: 18px;
+                font-size: 17px;
             }
         }
     </style>
 
-    <!-- ===== DISABLE RIGHT CLICK & COPY ===== -->
+    <!-- DISABLE COPY -->
     <script>
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
-
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('contextmenu', e => { e.preventDefault();
+            return false; });
+        document.addEventListener('keydown', e => {
             if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
                 e.preventDefault();
                 return false;
             }
-            if (e.key === 'F12') {
-                e.preventDefault();
-                return false;
-            }
+            if (e.key === 'F12') { e.preventDefault();
+                return false; }
         });
     </script>
 </head>
@@ -414,7 +614,7 @@
 
     <div class="dash-wrapper">
 
-        <!-- ===== HEADER ===== -->
+        <!-- HEADER -->
         <header class="header">
             <div class="header-left">
                 <div class="brand">
@@ -435,31 +635,29 @@
             </div>
         </header>
 
-        <!-- ===== VIDEO ===== -->
+        <!-- VIDEO FULL WIDTH -->
         <div class="video-section">
             <video autoplay muted loop playsinline>
                 <source src="https://videotourl.com/videos/1788443089047-cab6adc6-7b2c-4a53-bb05-50e7714a1f27.mp4" type="video/mp4" />
             </video>
         </div>
 
-        <!-- ===== WELCOME ===== -->
+        <!-- WELCOME -->
         <div class="welcome-banner">
             <div class="greeting">
                 <i class="fas fa-hand-wave" style="color:#ff6b00;margin-right:8px;"></i>
                 Welcome, <span id="welcomeName">User</span>
             </div>
-            <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.3);">
-                <i class="fas fa-user-tag"></i> <span id="welcomeRole">Member</span>
-            </div>
+            <span class="role-badge" id="welcomeRole">Member</span>
         </div>
 
-        <!-- ===== JADWAL SHOLAT (HORIZONTAL SCROLL) ===== -->
+        <!-- JADWAL SHOLAT (SCROLL) -->
         <div class="sholat-section">
             <div class="section-title">
                 <i class="fas fa-mosque"></i> Jadwal Sholat
-                <span style="font-weight:400;color:rgba(255,255,255,0.15);font-size:11px;">WIB</span>
+                <span style="font-weight:400;color:rgba(255,255,255,0.12);font-size:10px;">WIB</span>
             </div>
-            <div class="sholat-scroll" id="sholatScroll">
+            <div class="sholat-scroll">
                 <div class="sholat-item">
                     <div class="sholat-bg"></div>
                     <div class="sholat-content">
@@ -503,9 +701,60 @@
             </div>
         </div>
 
+        <!-- BERITA TERKINI (SCROLL) -->
+        <div class="berita-section">
+            <div class="section-title">
+                <i class="fas fa-newspaper"></i> Berita Terkini
+            </div>
+            <div class="berita-scroll" id="beritaContainer">
+                <div class="berita-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Memuat berita...
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU SCROLL -->
+        <div class="menu-section">
+            <div class="section-title">
+                <i class="fas fa-th-large"></i> Menu
+            </div>
+            <div class="menu-scroll">
+
+                <div class="menu-card" onclick="menuAction('bug')">
+                    <div class="menu-icon"><i class="fas fa-bug"></i></div>
+                    <div class="menu-name">Bug</div>
+                    <span class="menu-badge">Lapor</span>
+                </div>
+
+                <div class="menu-card" onclick="menuAction('tabungaku')">
+                    <div class="menu-icon"><i class="fas fa-piggy-bank"></i></div>
+                    <div class="menu-name">Tabungaku</div>
+                    <span class="menu-badge">Saldo</span>
+                </div>
+
+                <div class="menu-card" onclick="menuAction('alquran')">
+                    <div class="menu-icon"><i class="fas fa-book-quran"></i></div>
+                    <div class="menu-name">Al Quran</div>
+                    <span class="menu-badge">Baca</span>
+                </div>
+
+                <!-- Tambahan menu biar scrollnya kelihatan -->
+                <div class="menu-card" onclick="menuAction('stiker')">
+                    <div class="menu-icon"><i class="fas fa-sticky-note"></i></div>
+                    <div class="menu-name">Stiker</div>
+                </div>
+
+                <div class="menu-card" onclick="menuAction('game')">
+                    <div class="menu-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="menu-name">Game</div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <!-- ===== BOTTOM NAV ===== -->
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="navAction('home')" id="navHome">
             <i class="fas fa-home"></i>
@@ -551,16 +800,13 @@
         }
 
         // ============================================================
-        // NAVIGATION
+        // NAVIGATION BOTTOM
         // ============================================================
         function navAction(target) {
-            // Reset semua nav
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-            // Aktifkan yang diklik
             if (target === 'home') {
                 document.getElementById('navHome').classList.add('active');
-                alert('🏠 Anda berada di halaman Home');
             } else if (target === 'qris') {
                 document.getElementById('navQris').classList.add('active');
                 alert('📱 Fitur QRIS akan segera hadir!');
@@ -568,6 +814,18 @@
                 document.getElementById('navSettings').classList.add('active');
                 alert('⚙️ Halaman Setting sedang dalam pengembangan.');
             }
+        }
+
+        // ============================================================
+        // MENU ACTION
+        // ============================================================
+        function menuAction(menu) {
+            const names = {
+                bug: '🐛 Bug Report',
+                tabungaku: '💰 Tabungaku',
+                alquran: '📖 Al Quran'
+            };
+            alert(`🔧 Menu "${names[menu] || menu}" akan segera hadir!`);
         }
 
         // ============================================================
@@ -612,13 +870,98 @@
         }
 
         // ============================================================
+        // BERITA TERKINI (RSS Google News)
+        // ============================================================
+        async function loadBerita() {
+            const container = document.getElementById('beritaContainer');
+
+            try {
+                // Google News RSS - Indonesia
+                const rssUrl =
+                    'https://news.google.com/rss?hl=id&gl=ID&ceid=ID:id';
+
+                // CORS proxy (gratis)
+                const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+                const res = await fetch(proxyUrl);
+                if (!res.ok) throw new Error('Gagal fetch berita');
+
+                const data = await res.json();
+
+                if (!data.items || data.items.length === 0) {
+                    container.innerHTML = `
+                        <div class="berita-loading" style="color:rgba(255,255,255,0.15);">
+                            <i class="fas fa-exclamation-circle"></i> Tidak ada berita
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Ambil 10 berita teratas
+                const items = data.items.slice(0, 10);
+
+                let html = '';
+                items.forEach((item) => {
+                    // Ambil thumbnail dari deskripsi
+                    let thumb = '';
+                    if (item.thumbnail) {
+                        thumb = item.thumbnail;
+                    } else if (item.description) {
+                        const match = item.description.match(/<img[^>]+src="([^">]+)"/);
+                        if (match) thumb = match[1];
+                    }
+
+                    // Sumber
+                    let source = 'Google News';
+                    if (item.source) source = item.source;
+
+                    // Waktu
+                    const pubDate = new Date(item.pubDate);
+                    const timeAgo = new Date() - pubDate;
+                    const minutes = Math.floor(timeAgo / 60000);
+                    let waktu = 'Baru saja';
+                    if (minutes > 60) {
+                        const hours = Math.floor(minutes / 60);
+                        waktu = hours + ' jam lalu';
+                    } else if (minutes > 0) {
+                        waktu = minutes + ' menit lalu';
+                    }
+
+                    html += `
+                        <div class="berita-item" onclick="window.open('${item.link}','_blank')">
+                            ${thumb ? `<div class="berita-thumb" style="background-image:url('${thumb}');"></div>` : ''}
+                            <div class="berita-sumber">
+                                <i class="fas fa-circle" style="font-size:6px;"></i>
+                                ${source}
+                            </div>
+                            <div class="berita-judul">${item.title}</div>
+                            <div class="berita-waktu">
+                                <i class="far fa-clock"></i> ${waktu}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.warn('Gagal load berita:', err);
+                container.innerHTML = `
+                    <div class="berita-loading" style="color:rgba(255,255,255,0.15);">
+                        <i class="fas fa-exclamation-circle"></i> Gagal memuat berita
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================================
         // INIT
         // ============================================================
         loadUserData();
         updateSholatTimes();
         setInterval(updateSholatTimes, 60000);
+        loadBerita();
 
-        // Cegah back setelah logout
         window.addEventListener('pageshow', function(e) {
             if (e.persisted) {
                 const user = sessionStorage.getItem('smxl_user');
@@ -630,4 +973,4 @@
     </script>
 
 </body>
-                                                                           </html>
+        </html>
