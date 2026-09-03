@@ -30,17 +30,8 @@
             animation: rotateGlow 20s linear infinite;
             z-index: 0;
         }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .wrapper {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 420px;
-            padding: 20px;
-        }
+        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .wrapper { position: relative; z-index: 1; width: 100%; max-width: 420px; padding: 20px; }
         .card {
             background: rgba(16, 16, 16, 0.85);
             backdrop-filter: blur(24px);
@@ -257,9 +248,14 @@
 
     <script>
         // ============================================================
-        // KONFIGURASI — GANTI DENGAN RAW URL GIST LO!
+        // KONFIGURASI — GANTI 1 BARIS INI!
         // ============================================================
-        const DATA_URL = 'https://gist.github.com/samillll/add2762ede99be671309b45a3aa87e61.js';
+
+        // GIST ID — ambil dari URL gist lo (32 karakter)
+        const GIST_ID = 'add2762ede99be671309b45a3aa87e61';
+
+        // RAW URL — buat baca data (otomatis pake GIST_ID)
+        const GIST_RAW_URL = `https://gist.githubusercontent.com/samillll/${GIST_ID}/raw/data.json`;
 
         // ============================================================
         // STATE
@@ -331,11 +327,11 @@
         }
 
         // ============================================================
-        // FETCH DATA DARI GIST (PAKE RAW URL — TANPA TOKEN!)
+        // FETCH DATA DARI GIST (PAKE RAW URL — GAK PAKE TOKEN!)
         // ============================================================
         async function fetchAccounts() {
             try {
-                const res = await fetch(DATA_URL + '?t=' + Date.now());
+                const res = await fetch(GIST_RAW_URL + '?t=' + Date.now());
                 if (!res.ok) throw new Error('Gagal fetch data');
                 const data = await res.json();
                 return data.accounts || {};
