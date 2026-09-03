@@ -248,14 +248,14 @@
 
     <script>
         // ============================================================
-        // KONFIGURASI — GANTI 1 BARIS INI!
+        // KONFIGURASI — GANTI DENGAN PUNYA LO!
         // ============================================================
 
-        // GIST ID — ambil dari URL gist lo (32 karakter)
-        const GIST_ID = 'add2762ede99be671309b45a3aa87e61';
+        // BIN ID — dari JSONBin.io
+        const BIN_ID = '6a996f64da38895dfe33dd2d';
 
-        // RAW URL — buat baca data (otomatis pake GIST_ID)
-        const GIST_RAW_URL = `https://gist.githubusercontent.com/samillll/${GIST_ID}/raw/data.json`;
+        // API URL
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
         // ============================================================
         // STATE
@@ -327,14 +327,14 @@
         }
 
         // ============================================================
-        // FETCH DATA DARI GIST (PAKE RAW URL — GAK PAKE TOKEN!)
+        // FETCH DATA DARI JSONBIN
         // ============================================================
         async function fetchAccounts() {
             try {
-                const res = await fetch(GIST_RAW_URL + '?t=' + Date.now());
+                const res = await fetch(API_URL + '?t=' + Date.now());
                 if (!res.ok) throw new Error('Gagal fetch data');
                 const data = await res.json();
-                return data.accounts || {};
+                return data.record.accounts || {};
             } catch (e) {
                 console.warn('Gagal load data:', e);
                 return {};
