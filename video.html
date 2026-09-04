@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SMXL - Video</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* ===== VIDEO FULL SCREEN ===== */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 0;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== SKIP BUTTON ===== */
+        .skip-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            padding: 10px 22px;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skip-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            transform: scale(1.02);
+        }
+
+        .skip-btn:active {
+            transform: scale(0.95);
+        }
+
+        .skip-btn i {
+            font-size: 16px;
+        }
+
+        /* ===== TAP INDICATOR ===== */
+        .tap-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulseText 2s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulseText {
+            0%,
+            100% { opacity: 0.08; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== PROGRESS BAR (OPSIONAL) ===== */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b00, #ff8c38);
+            z-index: 5;
+            width: 0%;
+            transition: width 0.5s linear;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .skip-btn {
+                top: 16px;
+                right: 16px;
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            .skip-btn i {
+                font-size: 14px;
+            }
+            .tap-indicator {
+                bottom: 30px;
+                font-size: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- VIDEO FULL SCREEN -->
+    <div class="video-container" id="videoContainer">
+        <video id="introVideo" autoplay muted playsinline>
+            <source src="https://videotourl.com/videos/1788521681868-ed24e034-e89a-41f1-b81f-b293b1ae32b9.mp4" type="video/mp4" />
+        </video>
+    </div>
+
+    <!-- SKIP BUTTON -->
+    <button class="skip-btn" id="skipBtn">
+        <i class="fas fa-forward"></i> SKIP
+    </button>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- TAP INDICATOR -->
+    <div class="tap-indicator">
+        <i class="fas fa-hand-pointer"></i> Tap anywhere to skip
+    </div>
+
+    <script>
+        // ============================================================
+        // CEK SESSION
+        // ============================================================
+        const username = sessionStorage.getItem('smxl_user');
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================================
+        // REFS
+        // ============================================================
+        const video = document.getElementById('introVideo');
+        const skipBtn = document.getElementById('skipBtn');
+        const progressBar = document.getElementById('progressBar');
+        const videoContainer = document.getElementById('videoContainer');
+
+        // ============================================================
+        // SKIP KE DASHBOARD
+        // ============================================================
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        skipBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            goToDashboard();
+        });
+
+        // ============================================================
+        // TAP LAYAR → SKIP
+        // ============================================================
+        videoContainer.addEventListener('click', function() {
+            goToDashboard();
+        });
+
+        // ============================================================
+        // VIDEO SELESAI → OTOMATIS SKIP
+        // ============================================================
+        video.addEventListener('ended', function() {
+            goToDashboard();
+        });
+
+        // ============================================================
+        // PROGRESS BAR (UPDATE)
+        // ============================================================
+        video.addEventListener('timeupdate', function() {
+            if (video.duration > 0) {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = progress + '%';
+            }
+        });
+
+        // ============================================================
+        // MULAI VIDEO (AUTOPLAY)
+        // ============================================================
+        video.play().catch(function(err) {
+            console.warn('Autoplay gagal:', err);
+        });
+
+        // ============================================================
+        // TOMBOL SPASI & ENTER GAK BISA SKIP (AMAN)
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+            }
+        });
+
+        // ============================================================
+        // KALO VIDEO GAGAL LOAD → SKIP OTOMATIS SETELAH 5 DETIK
+        // ============================================================
+        video.addEventListener('error', function() {
+            console.warn('Video error, redirecting...');
+            setTimeout(goToDashboard, 2000);
+        });
+
+        // Fallback: kalo video gak jalan dalam 10 detik, paksa skip
+        setTimeout(function() {
+            if (video.currentTime === 0) {
+                console.warn('Video not playing, forcing skip...');
+                goToDashboard();
+            }
+        }, 10000);
+    </script>
+
+</body>
+  </html>
