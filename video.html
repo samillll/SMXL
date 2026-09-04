@@ -55,7 +55,6 @@
             background: #0a0a0a;
         }
 
-        /* ===== LOADING ===== */
         .video-loading {
             position: absolute;
             top: 50%;
@@ -88,7 +87,6 @@
             opacity: 0;
         }
 
-        /* ===== ERROR ===== */
         .video-error {
             position: absolute;
             top: 50%;
@@ -207,7 +205,8 @@
         }
 
         @keyframes pulseText {
-            0%, 100% { opacity: 0.05; }
+            0%,
+            100% { opacity: 0.05; }
             50% { opacity: 0.2; }
         }
 
@@ -336,6 +335,7 @@
         let isMuted = false;
         let isRedirecting = false;
         let hasError = false;
+        let fallbackAttempted = false;
         video.muted = false;
 
         // ============================================================
@@ -378,14 +378,13 @@
             hasError = true;
 
             videoLoading.classList.add('hidden');
-            videoError.classList.add('show');
 
             // COBA FALLBACK: pindah ke source berikutnya
             const sources = video.querySelectorAll('source');
             let currentSrc = video.currentSrc;
 
             for (let i = 0; i < sources.length; i++) {
-                if (sources[i].src === currentSrc) {
+                if (sources[i].src === currentSrc || i === 0) {
                     if (i + 1 < sources.length) {
                         video.src = sources[i + 1].src;
                         video.load();
@@ -393,12 +392,15 @@
                         videoError.classList.remove('show');
                         videoLoading.classList.remove('hidden');
                         hasError = false;
-                        break;
+                        return;
                     }
                 }
             }
 
-            // Kalo semua source gagal, kasih tombol skip otomatis setelah 3 detik
+            // Kalo semua source gagal, tampilkan error
+            videoError.classList.add('show');
+
+            // Auto skip setelah 5 detik
             setTimeout(function() {
                 if (!isRedirecting) {
                     goToDashboard();
@@ -473,4 +475,4 @@
     </script>
 
 </body>
-</html>
+    </html>
