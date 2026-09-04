@@ -335,19 +335,7 @@
         }
 
         // ============================================================
-        // GET DEVICE ID
-        // ============================================================
-        function getDeviceId() {
-            let id = localStorage.getItem('smxl_device_id');
-            if (!id) {
-                id = 'DEV_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
-                localStorage.setItem('smxl_device_id', id);
-            }
-            return id;
-        }
-
-        // ============================================================
-        // LOGIN
+        // LOGIN — TANPA CEK DEVICE ID!
         // ============================================================
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -374,11 +362,9 @@
                 return;
             }
 
-            const deviceId = getDeviceId();
-            if (accounts[username].deviceId !== deviceId) {
-                showMsg(loginMsg, '❌ Akun ini terdaftar di device lain! Jika ini kesalahan, hubungi admin.', 'error');
-                return;
-            }
+            // ============================================================
+            // CEK DEVICE DINONAKTIFKAN — BISA LOGIN DARI MANA SAJA!
+            // ============================================================
 
             // Simpan session
             sessionStorage.setItem('smxl_user', username);
@@ -394,4 +380,4 @@
         }
     </script>
 </body>
-</html>
+                </html>
