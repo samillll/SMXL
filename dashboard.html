@@ -6,13 +6,17 @@
     <title>SMXL - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== DISABLE COPY ===== */
+        /* ===== DISABLE COPY & TAP HIGHLIGHT ===== */
         * {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            outline: none !important;
         }
+
         ::selection {
             background: transparent;
         }
@@ -35,6 +39,7 @@
             color: #fff;
             overflow-x: hidden;
             padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent !important;
         }
 
         ::-webkit-scrollbar {
@@ -132,12 +137,18 @@
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .btn-logout:hover {
             background: rgba(255, 68, 68, 0.12);
             border-color: rgba(255, 68, 68, 0.2);
             color: #ff4444;
+        }
+
+        .btn-logout:active {
+            transform: scale(0.95);
         }
 
         /* ===== VIDEO FULL WIDTH ===== */
@@ -191,7 +202,7 @@
             font-weight: 600;
         }
 
-        /* ===== JADWAL SHOLAT (SCROLL) ===== */
+        /* ===== JADWAL SHOLAT ===== */
         .sholat-section {
             margin-bottom: 20px;
         }
@@ -240,7 +251,7 @@
             cursor: default;
             pointer-events: none;
             user-select: none;
-            transition: transform 0.3s;
+            -webkit-tap-highlight-color: transparent !important;
         }
 
         .sholat-item .sholat-bg {
@@ -296,7 +307,7 @@
             background-image: url('https://images.unsplash.com/photo-1584558617962-ff8b900c5f7e?w=300&h=400&fit=crop&crop=center');
         }
 
-        /* ===== BERITA TERKINI (SCROLL) ===== */
+        /* ===== BERITA ===== */
         .berita-section {
             margin-bottom: 20px;
         }
@@ -342,11 +353,17 @@
             padding: 14px 16px;
             transition: all 0.3s ease;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .berita-item:hover {
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .berita-item:active {
+            transform: scale(0.98);
         }
 
         .berita-item .berita-sumber {
@@ -447,12 +464,18 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .menu-card:hover {
             background: rgba(255, 107, 0, 0.04);
             border-color: rgba(255, 107, 0, 0.1);
             transform: translateY(-2px);
+        }
+
+        .menu-card:active {
+            transform: scale(0.95);
         }
 
         .menu-card .menu-icon {
@@ -512,6 +535,8 @@
             background: none;
             font-family: 'Inter', sans-serif;
             position: relative;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .nav-item i {
@@ -529,6 +554,10 @@
 
         .nav-item:hover {
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item:active {
+            transform: scale(0.92);
         }
 
         .nav-item .nav-badge {
@@ -596,18 +625,23 @@
         }
     </style>
 
-    <!-- DISABLE COPY -->
+    <!-- DISABLE COPY & RIGHT CLICK -->
     <script>
-        document.addEventListener('contextmenu', e => { e.preventDefault();
-            return false; });
-        document.addEventListener('keydown', e => {
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
                 e.preventDefault();
                 return false;
             }
-            if (e.key === 'F12') { e.preventDefault();
-                return false; }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
         });
+        document.addEventListener('touchstart', function() {}, { passive: true });
     </script>
 </head>
 <body>
@@ -738,7 +772,6 @@
                     <span class="menu-badge">Baca</span>
                 </div>
 
-                <!-- Tambahan menu biar scrollnya kelihatan -->
                 <div class="menu-card" onclick="menuAction('stiker')">
                     <div class="menu-icon"><i class="fas fa-sticky-note"></i></div>
                     <div class="menu-name">Stiker</div>
@@ -823,7 +856,9 @@
             const names = {
                 bug: '🐛 Bug Report',
                 tabungaku: '💰 Tabungaku',
-                alquran: '📖 Al Quran'
+                alquran: '📖 Al Quran',
+                stiker: '🧾 Stiker',
+                game: '🎮 Game'
             };
             alert(`🔧 Menu "${names[menu] || menu}" akan segera hadir!`);
         }
@@ -876,11 +911,7 @@
             const container = document.getElementById('beritaContainer');
 
             try {
-                // Google News RSS - Indonesia
-                const rssUrl =
-                    'https://news.google.com/rss?hl=id&gl=ID&ceid=ID:id';
-
-                // CORS proxy (gratis)
+                const rssUrl = 'https://news.google.com/rss?hl=id&gl=ID&ceid=ID:id';
                 const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
                 const res = await fetch(proxyUrl);
@@ -897,12 +928,10 @@
                     return;
                 }
 
-                // Ambil 10 berita teratas
                 const items = data.items.slice(0, 10);
 
                 let html = '';
                 items.forEach((item) => {
-                    // Ambil thumbnail dari deskripsi
                     let thumb = '';
                     if (item.thumbnail) {
                         thumb = item.thumbnail;
@@ -911,11 +940,9 @@
                         if (match) thumb = match[1];
                     }
 
-                    // Sumber
                     let source = 'Google News';
                     if (item.source) source = item.source;
 
-                    // Waktu
                     const pubDate = new Date(item.pubDate);
                     const timeAgo = new Date() - pubDate;
                     const minutes = Math.floor(timeAgo / 60000);
@@ -973,4 +1000,4 @@
     </script>
 
 </body>
-        </html>
+    </html>
