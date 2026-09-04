@@ -16,7 +16,6 @@
             user-select: none;
         }
 
-        /* ===== NONAKTIFKAN COPY ===== */
         body {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -26,7 +25,6 @@
             user-select: none;
         }
 
-        /* ===== NONAKTIFKAN TEXT SELECTION ===== */
         ::selection {
             background: transparent;
         }
@@ -90,7 +88,7 @@
 
         .logo-area {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
         }
 
         .logo-icon {
@@ -119,101 +117,6 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-top: 4px;
-        }
-
-        .verif-section {
-            margin: 18px 0 24px;
-            text-align: center;
-        }
-
-        .verif-section .verif-label {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .fingerprint-btn {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: rgba(255, 107, 0, 0.06);
-            border: 2px solid rgba(255, 107, 0, 0.15);
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 36px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            user-select: none;
-        }
-
-        .fingerprint-btn:hover {
-            border-color: rgba(255, 107, 0, 0.3);
-            background: rgba(255, 107, 0, 0.08);
-        }
-
-        .fingerprint-btn.active {
-            border-color: #ff6b00;
-            background: rgba(255, 107, 0, 0.15);
-            color: #ff6b00;
-            box-shadow: 0 0 60px rgba(255, 107, 0, 0.15);
-            animation: pulse 1s ease infinite;
-        }
-
-        .fingerprint-btn.verified {
-            border-color: #00c853;
-            background: rgba(0, 200, 83, 0.12);
-            color: #00c853;
-            box-shadow: 0 0 60px rgba(0, 200, 83, 0.1);
-            animation: none;
-        }
-
-        @keyframes pulse {
-            0%,
-            100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .fingerprint-btn .progress-ring {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: #ff6b00;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .fingerprint-btn.active .progress-ring {
-            opacity: 1;
-            animation: spin 1.5s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .verif-status {
-            margin-top: 12px;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.25);
-            transition: color 0.3s ease;
-            min-height: 20px;
-        }
-
-        .verif-status.success {
-            color: #00c853;
-        }
-
-        .verif-status.fail {
-            color: #ff4444;
         }
 
         .input-group {
@@ -344,15 +247,9 @@
             .logo-area h1 {
                 font-size: 26px;
             }
-            .fingerprint-btn {
-                width: 80px;
-                height: 80px;
-                font-size: 32px;
-            }
         }
     </style>
 
-    <!-- ===== DISABLE RIGHT CLICK & COPY ===== -->
     <script>
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -360,7 +257,6 @@
         });
 
         document.addEventListener('keydown', function(e) {
-            // Ctrl+C, Ctrl+U, Ctrl+Shift+I, F12
             if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
                 e.preventDefault();
                 return false;
@@ -379,15 +275,6 @@
                 <div class="logo-icon"><i class="fas fa-bolt"></i></div>
                 <h1>SMXL</h1>
                 <div class="subtitle">Super Max Level</div>
-            </div>
-
-            <div class="verif-section">
-                <span class="verif-label"><i class="fas fa-fingerprint"></i> Verifikasi</span>
-                <div class="fingerprint-btn" id="fingerprintBtn">
-                    <i class="fas fa-fingerprint"></i>
-                    <div class="progress-ring"></div>
-                </div>
-                <div class="verif-status" id="verifStatus">Scan jempol untuk verifikasi</div>
             </div>
 
             <form id="loginForm" autocomplete="off">
@@ -420,78 +307,15 @@
         // KONFIGURASI — GANTI DENGAN PUNYA LO!
         // ============================================================
 
-        const BIN_ID = '6a997430f5f4af5e29658392';
-        const API_KEY = '$2a$10$8qTaNsbZqbnutP413H87y.mP1yzZyY8tfHHzrCWn4PTkWdIOaGBfO';
+        const BIN_ID = 'MASUKAN_BIN_ID_DISINI';
+        const API_KEY = 'MASUKAN_API_KEY_DISINI';
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-        // ============================================================
-        // STATE
-        // ============================================================
-        let isVerified = false;
-        let holdInterval = null;
-        let holdDuration = 0;
-        const REQUIRED_HOLD = 3000;
 
         // ============================================================
         // REFS
         // ============================================================
-        const fingerprintBtn = document.getElementById('fingerprintBtn');
-        const verifStatus = document.getElementById('verifStatus');
         const loginForm = document.getElementById('loginForm');
         const loginMsg = document.getElementById('loginMsg');
-
-        // ============================================================
-        // FINGERPRINT HOLD
-        // ============================================================
-        fingerprintBtn.addEventListener('mousedown', startHold);
-        fingerprintBtn.addEventListener('touchstart', startHold);
-        fingerprintBtn.addEventListener('mouseup', endHold);
-        fingerprintBtn.addEventListener('touchend', endHold);
-        fingerprintBtn.addEventListener('mouseleave', endHold);
-
-        function startHold(e) {
-            e.preventDefault();
-            if (isVerified) return;
-            holdDuration = 0;
-            fingerprintBtn.classList.add('active');
-            verifStatus.textContent = '⏳ Tahan jempol... 0%';
-            verifStatus.className = 'verif-status';
-            holdInterval = setInterval(() => {
-                holdDuration += 100;
-                const progress = Math.min(100, Math.round((holdDuration / REQUIRED_HOLD) * 100));
-                verifStatus.textContent = `⏳ Tahan jempol... ${progress}%`;
-                if (holdDuration >= REQUIRED_HOLD) {
-                    clearInterval(holdInterval);
-                    holdInterval = null;
-                    verifySuccess();
-                }
-            }, 100);
-        }
-
-        function endHold(e) {
-            if (isVerified) return;
-            if (holdInterval) {
-                clearInterval(holdInterval);
-                holdInterval = null;
-            }
-            fingerprintBtn.classList.remove('active');
-            if (!isVerified) {
-                verifStatus.textContent = '❌ Scan gagal! Coba lagi.';
-                verifStatus.className = 'verif-status fail';
-                setTimeout(() => {
-                    verifStatus.textContent = 'Scan jempol untuk verifikasi';
-                    verifStatus.className = 'verif-status';
-                }, 2000);
-            }
-        }
-
-        function verifySuccess() {
-            isVerified = true;
-            fingerprintBtn.classList.remove('active');
-            fingerprintBtn.classList.add('verified');
-            verifStatus.textContent = '✅ Verifikasi berhasil! Silahkan login.';
-            verifStatus.className = 'verif-status success';
-        }
 
         // ============================================================
         // FETCH DATA DARI JSONBIN
@@ -533,11 +357,6 @@
 
             loginMsg.classList.remove('show');
 
-            if (!isVerified) {
-                showMsg(loginMsg, '❌ Verifikasi jempol dulu!', 'error');
-                return;
-            }
-
             if (!username || !password) {
                 showMsg(loginMsg, '❌ Username & Password harus diisi!', 'error');
                 return;
@@ -561,10 +380,12 @@
                 return;
             }
 
+            // Simpan session
             sessionStorage.setItem('smxl_user', username);
             sessionStorage.setItem('smxl_role', accounts[username].role || 'Member');
 
-            window.location.href = 'dashboard.html';
+            // Redirect ke verifikasi jempol
+            window.location.href = 'verif.html';
         });
 
         function showMsg(el, text, type) {
@@ -573,4 +394,4 @@
         }
     </script>
 </body>
-                        </html>
+</html>
