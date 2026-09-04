@@ -14,6 +14,9 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            outline: none !important;
         }
 
         ::selection {
@@ -34,6 +37,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
+            -webkit-tap-highlight-color: transparent !important;
         }
 
         body::before {
@@ -141,6 +145,8 @@
             justify-content: center;
             position: relative;
             user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .fingerprint-btn:hover {
@@ -219,11 +225,17 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
             margin-top: 8px;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         .btn-skip:hover {
             background: rgba(255, 255, 255, 0.06);
             color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-skip:active {
+            transform: scale(0.97);
         }
 
         .footer {
@@ -270,6 +282,7 @@
                 return false;
             }
         });
+        document.addEventListener('touchstart', function() {}, { passive: true });
     </script>
 </head>
 <body>
@@ -394,4 +407,4 @@
         });
     </script>
 </body>
-                                                                           </html>
+</html>
