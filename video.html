@@ -6,7 +6,6 @@
     <title>SMXL - Video</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +35,6 @@
             -webkit-tap-highlight-color: transparent !important;
         }
 
-        /* ===== VIDEO FULL SCREEN ===== */
         .video-container {
             position: fixed;
             top: 0;
@@ -57,7 +55,7 @@
             background: #0a0a0a;
         }
 
-        /* ===== LOADING INDICATOR ===== */
+        /* ===== LOADING ===== */
         .video-loading {
             position: absolute;
             top: 50%;
@@ -90,11 +88,37 @@
             opacity: 0;
         }
 
+        /* ===== ERROR ===== */
+        .video-error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.15);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-error i {
+            font-size: 48px;
+            color: #ff4444;
+            opacity: 0.3;
+        }
+
+        .video-error.show {
+            display: flex;
+        }
+
         @keyframes spinLoading {
             to { transform: rotate(360deg); }
         }
 
-        /* ===== SKIP BUTTON ===== */
         .skip-btn {
             position: fixed;
             top: 20px;
@@ -112,7 +136,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -128,14 +151,8 @@
 
         .skip-btn:active {
             transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.04);
         }
 
-        .skip-btn i {
-            font-size: 16px;
-        }
-
-        /* ===== MUTE/UNMUTE BUTTON ===== */
         .sound-btn {
             position: fixed;
             bottom: 80px;
@@ -144,7 +161,6 @@
             z-index: 10;
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 40px;
             padding: 10px 20px;
@@ -175,11 +191,6 @@
             font-size: 16px;
         }
 
-        .sound-btn .sound-label {
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== TAP INDICATOR ===== */
         .tap-indicator {
             position: fixed;
             bottom: 40px;
@@ -200,7 +211,6 @@
             50% { opacity: 0.2; }
         }
 
-        /* ===== PROGRESS BAR ===== */
         .progress-bar {
             position: fixed;
             bottom: 0;
@@ -213,7 +223,6 @@
             opacity: 0.5;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
             .skip-btn {
                 top: 16px;
@@ -221,16 +230,10 @@
                 padding: 8px 16px;
                 font-size: 12px;
             }
-            .skip-btn i {
-                font-size: 14px;
-            }
             .sound-btn {
                 bottom: 70px;
                 padding: 8px 16px;
                 font-size: 11px;
-            }
-            .sound-btn i {
-                font-size: 14px;
             }
             .tap-indicator {
                 bottom: 30px;
@@ -238,9 +241,6 @@
             }
             .video-loading i {
                 font-size: 28px;
-            }
-            .video-loading span {
-                font-size: 12px;
             }
         }
     </style>
@@ -260,43 +260,50 @@
                 return false;
             }
         });
-
         document.addEventListener('touchstart', function() {}, { passive: true });
     </script>
 </head>
 <body>
 
-    <!-- VIDEO FULL SCREEN -->
     <div class="video-container" id="videoContainer">
-        <!-- LOADING INDICATOR -->
+        <!-- LOADING -->
         <div class="video-loading" id="videoLoading">
             <i class="fas fa-spinner"></i>
             <span>Memuat video...</span>
         </div>
 
-        <!-- VIDEO — SUARA AKTIF! -->
+        <!-- ERROR -->
+        <div class="video-error" id="videoError">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Gagal memuat video<br>Klik SKIP untuk melanjutkan</span>
+        </div>
+
+        <!-- VIDEO — MULTIPLE SOURCE -->
         <video id="introVideo" preload="auto" playsinline>
+            <!-- SOURCE 1: URL LO -->
             <source src="https://videotourl.com/videos/1788563768147-b276a4ee-cb6d-4da6-ad85-9f6bfbad7e20.mp4" type="video/mp4" />
-            <!-- FALLBACK -->
+            <!-- SOURCE 2: FALLBACK (DIRECT MP4) -->
             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+            <!-- SOURCE 3: ALTERNATIVE FALLBACK -->
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
         </video>
     </div>
 
-    <!-- SKIP BUTTON -->
+    <!-- SKIP -->
     <button class="skip-btn" id="skipBtn">
         <i class="fas fa-forward"></i> SKIP
     </button>
 
-    <!-- SOUND CONTROL -->
+    <!-- SOUND -->
     <button class="sound-btn" id="soundBtn">
         <i class="fas fa-volume-up" id="soundIcon"></i>
         <span class="sound-label" id="soundLabel">Suara: ON</span>
     </button>
 
-    <!-- PROGRESS BAR -->
+    <!-- PROGRESS -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- TAP INDICATOR -->
+    <!-- TAP -->
     <div class="tap-indicator">
         <i class="fas fa-hand-pointer"></i> Tap anywhere to skip
     </div>
@@ -321,18 +328,19 @@
         const progressBar = document.getElementById('progressBar');
         const videoContainer = document.getElementById('videoContainer');
         const videoLoading = document.getElementById('videoLoading');
+        const videoError = document.getElementById('videoError');
 
         // ============================================================
-        // STATE — SUARA AKTIF (muted = false)
+        // STATE
         // ============================================================
         let isMuted = false;
+        let isRedirecting = false;
+        let hasError = false;
         video.muted = false;
 
         // ============================================================
         // SKIP KE DASHBOARD
         // ============================================================
-        let isRedirecting = false;
-
         function goToDashboard() {
             if (isRedirecting) return;
             isRedirecting = true;
@@ -344,16 +352,10 @@
             goToDashboard();
         });
 
-        // ============================================================
-        // TAP LAYAR → SKIP
-        // ============================================================
         videoContainer.addEventListener('click', function() {
             goToDashboard();
         });
 
-        // ============================================================
-        // VIDEO SELESAI → OTOMATIS SKIP
-        // ============================================================
         video.addEventListener('ended', function() {
             goToDashboard();
         });
@@ -363,12 +365,49 @@
         // ============================================================
         video.addEventListener('playing', function() {
             videoLoading.classList.add('hidden');
-            // Pastikan suara tetap ON
             video.muted = false;
+            hasError = false;
         });
 
         // ============================================================
-        // PROGRESS BAR (UPDATE)
+        // VIDEO ERROR → TAMPILKAN ERROR + FALLBACK
+        // ============================================================
+        video.addEventListener('error', function(e) {
+            console.warn('Video error:', e);
+            if (hasError) return;
+            hasError = true;
+
+            videoLoading.classList.add('hidden');
+            videoError.classList.add('show');
+
+            // COBA FALLBACK: pindah ke source berikutnya
+            const sources = video.querySelectorAll('source');
+            let currentSrc = video.currentSrc;
+
+            for (let i = 0; i < sources.length; i++) {
+                if (sources[i].src === currentSrc) {
+                    if (i + 1 < sources.length) {
+                        video.src = sources[i + 1].src;
+                        video.load();
+                        video.play().catch(function() {});
+                        videoError.classList.remove('show');
+                        videoLoading.classList.remove('hidden');
+                        hasError = false;
+                        break;
+                    }
+                }
+            }
+
+            // Kalo semua source gagal, kasih tombol skip otomatis setelah 3 detik
+            setTimeout(function() {
+                if (!isRedirecting) {
+                    goToDashboard();
+                }
+            }, 5000);
+        });
+
+        // ============================================================
+        // PROGRESS BAR
         // ============================================================
         video.addEventListener('timeupdate', function() {
             if (video.duration > 0) {
@@ -378,7 +417,7 @@
         });
 
         // ============================================================
-        // MUTE / UNMUTE TOGGLE
+        // SOUND TOGGLE
         // ============================================================
         soundBtn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -395,11 +434,10 @@
         });
 
         // ============================================================
-        // MULAI VIDEO (AUTOPLAY) + FALLBACK
+        // AUTOPLAY + FALLBACK
         // ============================================================
         video.play().catch(function(err) {
             console.warn('Autoplay gagal:', err);
-            // Kalo autoplay gagal, coba play setelah user interaksi
             videoContainer.addEventListener('click', function playOnce() {
                 video.play().catch(function(e) {});
                 videoContainer.removeEventListener('click', playOnce);
@@ -407,30 +445,21 @@
         });
 
         // ============================================================
-        // FALLBACK: KALO VIDEO GAGAL LOAD → SKIP SETELAH 5 DETIK
-        // ============================================================
-        video.addEventListener('error', function() {
-            console.warn('Video error, redirecting...');
-            setTimeout(goToDashboard, 2000);
-        });
-
-        // ============================================================
-        // FALLBACK 2: KALO VIDEO GAK JALAN DALAM 10 DETIK → SKIP PAKSA
+        // FALLBACK: KALO VIDEO GAK JALAN DALAM 10 DETIK → SKIP PAKSA
         // ============================================================
         let fallbackTimer = setTimeout(function() {
-            if (video.currentTime === 0 && !isRedirecting) {
+            if (video.currentTime === 0 && !isRedirecting && !hasError) {
                 console.warn('Video not playing, forcing skip...');
                 goToDashboard();
             }
-        }, 8000);
+        }, 10000);
 
-        // Batalkan fallback kalo video mulai play
         video.addEventListener('playing', function() {
             clearTimeout(fallbackTimer);
         });
 
         // ============================================================
-        // TOMBOL SPASI & ENTER GAK BISA SKIP (AMAN)
+        // DISABLE KEYBOARD
         // ============================================================
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -438,9 +467,6 @@
             }
         });
 
-        // ============================================================
-        // PREVENT DEFAULT TOUCH BEHAVIOR
-        // ============================================================
         document.addEventListener('touchmove', function(e) {
             e.preventDefault();
         }, { passive: false });
