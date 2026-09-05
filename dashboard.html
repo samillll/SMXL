@@ -742,39 +742,39 @@
             </div>
         </div>
 
-        <!-- MENU GRID (4 MENU) -->
+        <!-- MENU GRID (4 MENU — LANGSUNG KE HALAMAN) -->
         <div class="menu-grid-section">
             <div class="section-title">
                 <i class="fas fa-th-large"></i> Menu
             </div>
             <div class="menu-grid">
 
-                <!-- BUG -->
-                <div class="menu-card" onclick="menuAction('bug')">
+                <!-- BUG → ke menu.html (atau halaman sendiri) -->
+                <div class="menu-card" onclick="goTo('menu')">
                     <div class="menu-icon"><i class="fas fa-bug"></i></div>
                     <div class="menu-name">BUG</div>
                     <div class="menu-desc">Lapor & cek bug</div>
                     <span class="menu-badge">NEW</span>
                 </div>
 
-                <!-- TRACKER -->
-                <div class="menu-card" onclick="menuAction('tracker')">
+                <!-- TRACKER → placeholder -->
+                <div class="menu-card" onclick="goTo('tracker')">
                     <div class="menu-icon"><i class="fas fa-map-pin"></i></div>
                     <div class="menu-name">TRACKER</div>
                     <div class="menu-desc">Lacak status & lokasi</div>
                     <span class="menu-badge">LIVE</span>
                 </div>
 
-                <!-- SENDER -->
-                <div class="menu-card" onclick="menuAction('sender')">
+                <!-- SENDER → LANGSUNG KE sender.html -->
+                <div class="menu-card" onclick="goTo('sender')">
                     <div class="menu-icon"><i class="fas fa-paper-plane"></i></div>
                     <div class="menu-name">SENDER</div>
                     <div class="menu-desc">Kirim pesan massal</div>
                     <span class="menu-badge">PRO</span>
                 </div>
 
-                <!-- TABUNGANKU -->
-                <div class="menu-card" onclick="menuAction('tabungaku')">
+                <!-- TABUNGANKU → placeholder -->
+                <div class="menu-card" onclick="goTo('tabungaku')">
                     <div class="menu-icon"><i class="fas fa-piggy-bank"></i></div>
                     <div class="menu-name">TABUNGANKU</div>
                     <div class="menu-desc">Kelola tabungan</div>
@@ -848,16 +848,20 @@
         }
 
         // ============================================================
-        // MENU ACTION
+        // MENU GRID — LANGSUNG KE HALAMAN
         // ============================================================
-        function menuAction(menu) {
-            const names = {
-                bug: '🐛 Bug Report',
-                tracker: '📍 Tracker',
-                sender: '📨 Sender',
-                tabungaku: '💰 Tabungaku'
-            };
-            alert(`🔧 Menu "${names[menu] || menu}" akan segera hadir!`);
+        function goTo(page) {
+            if (page === 'menu') {
+                window.location.href = 'menu.html';
+            } else if (page === 'sender') {
+                window.location.href = 'sender.html';
+            } else if (page === 'tracker') {
+                alert('📍 Tracker akan segera hadir!');
+            } else if (page === 'tabungaku') {
+                alert('💰 Tabungaku akan segera hadir!');
+            } else {
+                alert('🔧 Halaman sedang dalam pengembangan.');
+            }
         }
 
         // ============================================================
@@ -997,4 +1001,4 @@
     </script>
 
 </body>
-    </html>
+                        </html>
