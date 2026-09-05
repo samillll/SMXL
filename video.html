@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>SMXL - Video</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * {
             margin: 0;
@@ -15,15 +14,7 @@
             -ms-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent !important;
-            -webkit-touch-callout: none !important;
             outline: none !important;
-        }
-
-        ::selection {
-            background: transparent;
-        }
-        ::-moz-selection {
-            background: transparent;
         }
 
         body {
@@ -32,7 +23,6 @@
             height: 100vh;
             width: 100vw;
             position: relative;
-            -webkit-tap-highlight-color: transparent !important;
         }
 
         .video-container {
@@ -42,7 +32,6 @@
             width: 100vw;
             height: 100vh;
             background: #0a0a0a;
-            z-index: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -55,14 +44,12 @@
             background: #0a0a0a;
         }
 
-        /* ===== LOADING ===== */
-        .video-loading {
+        .loading {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.15);
             font-family: 'Inter', sans-serif;
             font-size: 14px;
             display: flex;
@@ -73,26 +60,20 @@
             transition: opacity 0.5s ease;
         }
 
-        .video-loading i {
+        .loading i {
             font-size: 32px;
             color: #ff6b00;
-            animation: spinLoading 1s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
-        .video-loading span {
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
-
-        .video-loading.hidden {
-            opacity: 0;
-        }
-
-        @keyframes spinLoading {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* ===== SKIP BUTTON ===== */
+        .loading.hidden {
+            opacity: 0;
+        }
+
         .skip-btn {
             position: fixed;
             top: 20px;
@@ -100,7 +81,6 @@
             z-index: 10;
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 40px;
             padding: 10px 22px;
@@ -109,13 +89,10 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: 0.3s;
+            border: none;
             -webkit-tap-highlight-color: transparent !important;
             outline: none !important;
-            user-select: none;
         }
 
         .skip-btn:hover {
@@ -128,10 +105,9 @@
         }
 
         .skip-btn i {
-            font-size: 16px;
+            margin-right: 6px;
         }
 
-        /* ===== TAP INDICATOR ===== */
         .tap-indicator {
             position: fixed;
             bottom: 40px;
@@ -143,26 +119,38 @@
             font-family: 'Inter', sans-serif;
             letter-spacing: 2px;
             text-transform: uppercase;
-            animation: pulseText 2.5s ease infinite;
+            animation: pulse 2.5s ease infinite;
             pointer-events: none;
         }
 
-        @keyframes pulseText {
-            0%, 100% { opacity: 0.05; }
+        @keyframes pulse {
+            0%,
+            100% { opacity: 0.05; }
             50% { opacity: 0.2; }
         }
 
-        /* ===== PROGRESS BAR ===== */
-        .progress-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ff6b00, #ff8c38);
-            z-index: 5;
-            width: 0%;
-            transition: width 0.3s linear;
-            opacity: 0.5;
+        .error-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.1);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .error-msg i {
+            font-size: 40px;
+            color: #ff4444;
+            opacity: 0.3;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .error-msg.show {
+            display: block;
         }
 
         @media (max-width: 480px) {
@@ -172,18 +160,12 @@
                 padding: 8px 16px;
                 font-size: 12px;
             }
-            .skip-btn i {
-                font-size: 14px;
-            }
             .tap-indicator {
                 bottom: 30px;
                 font-size: 10px;
             }
-            .video-loading i {
+            .loading i {
                 font-size: 28px;
-            }
-            .video-loading span {
-                font-size: 12px;
             }
         }
     </style>
@@ -208,29 +190,35 @@
 </head>
 <body>
 
-    <!-- VIDEO FULL SCREEN -->
     <div class="video-container" id="videoContainer">
-        <!-- LOADING INDICATOR -->
-        <div class="video-loading" id="videoLoading">
+
+        <!-- LOADING -->
+        <div class="loading" id="loading">
             <i class="fas fa-spinner"></i>
             <span>Memuat video...</span>
         </div>
 
-        <!-- VIDEO — SUARA AKTIF! -->
+        <!-- ERROR -->
+        <div class="error-msg" id="errorMsg">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Gagal memuat video<br>Klik SKIP untuk melanjutkan</span>
+        </div>
+
+        <!-- VIDEO — MULTIPLE SOURCE -->
         <video id="introVideo" preload="auto" playsinline>
+            <!-- SOURCE 1: URL LO -->
             <source src="https://videotourl.com/videos/1788563768147-b276a4ee-cb6d-4da6-ad85-9f6bfbad7e20.mp4" type="video/mp4" />
+            <!-- SOURCE 2: FALLBACK (PASTI JALAN) -->
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
         </video>
     </div>
 
-    <!-- SKIP BUTTON -->
+    <!-- SKIP -->
     <button class="skip-btn" id="skipBtn">
         <i class="fas fa-forward"></i> SKIP
     </button>
 
-    <!-- PROGRESS BAR -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- TAP INDICATOR -->
+    <!-- TAP -->
     <div class="tap-indicator">
         <i class="fas fa-hand-pointer"></i> Tap anywhere to skip
     </div>
@@ -249,15 +237,16 @@
         // ============================================================
         const video = document.getElementById('introVideo');
         const skipBtn = document.getElementById('skipBtn');
-        const progressBar = document.getElementById('progressBar');
         const videoContainer = document.getElementById('videoContainer');
-        const videoLoading = document.getElementById('videoLoading');
+        const loading = document.getElementById('loading');
+        const errorMsg = document.getElementById('errorMsg');
+
+        let isRedirecting = false;
+        let hasError = false;
 
         // ============================================================
         // SKIP KE DASHBOARD
         // ============================================================
-        let isRedirecting = false;
-
         function goToDashboard() {
             if (isRedirecting) return;
             isRedirecting = true;
@@ -269,16 +258,10 @@
             goToDashboard();
         });
 
-        // ============================================================
-        // TAP LAYAR → SKIP
-        // ============================================================
         videoContainer.addEventListener('click', function() {
             goToDashboard();
         });
 
-        // ============================================================
-        // VIDEO SELESAI → OTOMATIS SKIP
-        // ============================================================
         video.addEventListener('ended', function() {
             goToDashboard();
         });
@@ -287,25 +270,49 @@
         // VIDEO MULAI PLAY → HIDE LOADING
         // ============================================================
         video.addEventListener('playing', function() {
-            videoLoading.classList.add('hidden');
+            loading.classList.add('hidden');
+            errorMsg.classList.remove('show');
+            hasError = false;
         });
 
         // ============================================================
-        // PROGRESS BAR (UPDATE)
+        // VIDEO ERROR → TAMPILKAN ERROR + FALLBACK
         // ============================================================
-        video.addEventListener('timeupdate', function() {
-            if (video.duration > 0) {
-                const progress = (video.currentTime / video.duration) * 100;
-                progressBar.style.width = progress + '%';
+        video.addEventListener('error', function(e) {
+            console.warn('Video error:', e);
+            if (hasError) return;
+            hasError = true;
+
+            loading.classList.add('hidden');
+
+            // COBA FALLBACK KE SOURCE KEDUA
+            const sources = video.querySelectorAll('source');
+            if (sources.length > 1 && video.src !== sources[1].src) {
+                video.src = sources[1].src;
+                video.load();
+                video.play().catch(function() {});
+                loading.classList.remove('hidden');
+                hasError = false;
+                return;
             }
+
+            // KALO FALLBACK JUGA GAGAL → TAMPILKAN ERROR
+            errorMsg.classList.add('show');
+
+            // AUTO SKIP SETELAH 3 DETIK
+            setTimeout(function() {
+                if (!isRedirecting) {
+                    goToDashboard();
+                }
+            }, 3000);
         });
 
         // ============================================================
-        // MULAI VIDEO (AUTOPLAY)
+        // AUTOPLAY
         // ============================================================
         video.play().catch(function(err) {
             console.warn('Autoplay gagal:', err);
-            // Kalo autoplay gagal, coba play setelah user interaksi
+            // Tunggu user tap
             videoContainer.addEventListener('click', function playOnce() {
                 video.play().catch(function(e) {});
                 videoContainer.removeEventListener('click', playOnce);
@@ -313,31 +320,21 @@
         });
 
         // ============================================================
-        // FALLBACK: KALO VIDEO GAGAL LOAD → SKIP SETELAH 5 DETIK
-        // ============================================================
-        video.addEventListener('error', function() {
-            console.warn('Video error, redirecting...');
-            videoLoading.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ff6b00;"></i><span>Gagal memuat video</span>';
-            setTimeout(goToDashboard, 3000);
-        });
-
-        // ============================================================
-        // FALLBACK 2: KALO VIDEO GAK JALAN DALAM 10 DETIK → SKIP PAKSA
+        // FALLBACK: KALO VIDEO GAK JALAN DALAM 8 DETIK → SKIP PAKSA
         // ============================================================
         let fallbackTimer = setTimeout(function() {
-            if (video.currentTime === 0 && !isRedirecting) {
+            if (video.currentTime === 0 && !isRedirecting && !hasError) {
                 console.warn('Video not playing, forcing skip...');
                 goToDashboard();
             }
-        }, 10000);
+        }, 8000);
 
-        // Batalkan fallback kalo video mulai play
         video.addEventListener('playing', function() {
             clearTimeout(fallbackTimer);
         });
 
         // ============================================================
-        // TOMBOL SPASI & ENTER GAK BISA SKIP (AMAN)
+        // DISABLE KEYBOARD
         // ============================================================
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -345,9 +342,6 @@
             }
         });
 
-        // ============================================================
-        // PREVENT DEFAULT TOUCH BEHAVIOR
-        // ============================================================
         document.addEventListener('touchmove', function(e) {
             e.preventDefault();
         }, { passive: false });
