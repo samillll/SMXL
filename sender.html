@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMXL - Sender</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            outline: none !important;
+        }
+
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+            padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        .wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0 16px;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .header .brand {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00, #ff8c38);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .brand i {
+            -webkit-text-fill-color: initial;
+            color: #ff6b00;
+            margin-right: 6px;
+        }
+
+        .header .back-btn {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .header .back-btn:hover {
+            color: #fff;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .card .title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card .title i {
+            color: #ff6b00;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: 0.3s;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.04);
+        }
+
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-group select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b00, #e65c00);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        .status-box {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-box.show {
+            display: flex;
+        }
+
+        .status-box.success {
+            background: rgba(0, 200, 83, 0.08);
+            border: 1px solid rgba(0, 200, 83, 0.12);
+            color: #00c853;
+        }
+
+        .status-box.error {
+            background: rgba(255, 68, 68, 0.08);
+            border: 1px solid rgba(255, 68, 68, 0.12);
+            color: #ff4444;
+        }
+
+        .status-box.loading-status {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.12);
+            color: #ffc107;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.06);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .footer span {
+            color: #ff6b00;
+            font-weight: 600;
+        }
+
+        .quick-btn {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(255, 107, 0, 0.06);
+            border: 1px solid rgba(255, 107, 0, 0.08);
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 3px 4px 3px 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .quick-btn:hover {
+            background: rgba(255, 107, 0, 0.12);
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            .wrapper {
+                padding: 12px;
+            }
+            .header .brand {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('touchstart', function() {}, { passive: true });
+    </script>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="brand">
+                <i class="fas fa-bolt"></i> SMXL
+            </div>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </header>
+
+        <!-- SENDER CARD -->
+        <div class="card">
+            <div class="title">
+                <i class="fas fa-paper-plane"></i> Kirim Pesan via WhatsApp
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> Nomor Tujuan</label>
+                <input type="text" id="phoneNumber" placeholder="628xxxxxxxxxx" value="6281234567890" />
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-tag"></i> Kategori</label>
+                <select id="category">
+                    <option value="bug">🐛 Bug Report</option>
+                    <option value="feature">💡 Feature Request</option>
+                    <option value="general">📝 General</option>
+                    <option value="urgent">🚨 Urgent</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-edit"></i> Pesan</label>
+                <textarea id="message" rows="5" placeholder="Tulis pesan di sini...">Saya menemukan bug di SMXL...</textarea>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <button class="quick-btn" onclick="setQuickMessage('bug')">🐛 Bug</button>
+                <button class="quick-btn" onclick="setQuickMessage('feature')">💡 Fitur</button>
+                <button class="quick-btn" onclick="setQuickMessage('urgent')">🚨 Urgent</button>
+            </div>
+
+            <button class="btn-primary" id="sendBtn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i> KIRIM
+            </button>
+
+            <div class="status-box" id="statusBox"></div>
+        </div>
+
+        <!-- INFO -->
+        <div class="card">
+            <div class="title">
+                <i class="fas fa-info-circle"></i> Info
+            </div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.15);line-height:1.6;">
+                <i class="fas fa-check-circle" style="color:#00c853;"></i> Pesan akan dikirim via WhatsApp.<br>
+                <i class="fas fa-clock" style="color:#ffc107;"></i> Server harus aktif dan terhubung.<br>
+                <i class="fas fa-shield-alt" style="color:#ff6b00;"></i> Data dikirim aman via API.
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <i class="fas fa-code"></i> created by <span>SAMIL</span>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // CEK SESSION
+        // ============================================================
+        const username = sessionStorage.getItem('smxl_user');
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================================
+        // BACK TO MENU
+        // ============================================================
+        function goBack() {
+            window.location.href = 'menu.html';
+        }
+
+        // ============================================================
+        // SET QUICK MESSAGE
+        // ============================================================
+        function setQuickMessage(type) {
+            const messages = {
+                bug: '🐛 Saya menemukan bug di SMXL: [jelaskan bug]',
+                feature: '💡 Saya punya ide fitur baru: [jelaskan fitur]',
+                urgent: '🚨 [URGENT] Ada masalah serius: [jelaskan]'
+            };
+            document.getElementById('message').value = messages[type] || messages.general;
+        }
+
+        // ============================================================
+        // SEND MESSAGE
+        // ============================================================
+        async function sendMessage() {
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const category = document.getElementById('category').value;
+            const message = document.getElementById('message').value.trim();
+
+            const statusBox = document.getElementById('statusBox');
+            const sendBtn = document.getElementById('sendBtn');
+
+            // Validasi
+            if (!phone || phone.length < 10) {
+                showStatus('❌ Nomor HP tidak valid!', 'error');
+                return;
+            }
+
+            if (!message || message.length < 5) {
+                showStatus('❌ Pesan minimal 5 karakter!', 'error');
+                return;
+            }
+
+            // Disable button
+            sendBtn.disabled = true;
+            showStatus('⏳ Mengirim pesan...', 'loading-status');
+
+            try {
+                // ============================================================
+                // GANTI URL INI DENGAN IP/PORT SERVER UBUNTU LO!
+                // ============================================================
+                const API_URL = 'http://YOUR_SERVER_IP:3000/send-wa';
+
+                const payload = {
+                    phone: phone,
+                    category: category,
+                    message: message,
+                    sender: username || 'User'
+                };
+
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    showStatus('✅ Pesan berhasil dikirim ke WhatsApp!', 'success');
+                    document.getElementById('message').value = '';
+                } else {
+                    showStatus('❌ Gagal mengirim: ' + (data.message || 'Server error'), 'error');
+                }
+
+            } catch (err) {
+                console.error('Error:', err);
+                showStatus('❌ Gagal terhubung ke server. Pastikan server Ubuntu aktif!', 'error');
+            } finally {
+                sendBtn.disabled = false;
+            }
+        }
+
+        // ============================================================
+        // SHOW STATUS
+        // ============================================================
+        function showStatus(msg, type) {
+            const statusBox = document.getElementById('statusBox');
+            statusBox.textContent = msg;
+            statusBox.className = 'status-box show ' + type;
+        }
+    </script>
+
+</body>
+              </html>
