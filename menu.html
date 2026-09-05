@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMXL - Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            outline: none !important;
+        }
+
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+            padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        .wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0 16px;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .header .brand {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00, #ff8c38);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .brand i {
+            -webkit-text-fill-color: initial;
+            color: #ff6b00;
+            margin-right: 6px;
+        }
+
+        .header .back-btn {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .header .back-btn:hover {
+            color: #fff;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 30px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
+
+        .menu-card:hover {
+            background: rgba(255, 107, 0, 0.04);
+            border-color: rgba(255, 107, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .menu-card:active {
+            transform: scale(0.95);
+        }
+
+        .menu-card .menu-icon {
+            font-size: 40px;
+            color: #ff6b00;
+            margin-bottom: 10px;
+        }
+
+        .menu-card .menu-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .menu-card .menu-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 4px;
+        }
+
+        .menu-card .menu-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 14px;
+            border-radius: 20px;
+            background: rgba(255, 107, 0, 0.12);
+            color: #ff6b00;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.06);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .footer span {
+            color: #ff6b00;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .wrapper {
+                padding: 12px;
+            }
+            .header .brand {
+                font-size: 18px;
+            }
+            .menu-grid {
+                gap: 12px;
+            }
+            .menu-card {
+                padding: 24px 12px;
+            }
+            .menu-card .menu-icon {
+                font-size: 32px;
+            }
+            .menu-card .menu-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('touchstart', function() {}, { passive: true });
+    </script>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="brand">
+                <i class="fas fa-bolt"></i> SMXL
+            </div>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </header>
+
+        <!-- MENU GRID -->
+        <div class="menu-grid">
+
+            <!-- BUG -->
+            <div class="menu-card" onclick="menuAction('bug')">
+                <div class="menu-icon"><i class="fas fa-bug"></i></div>
+                <div class="menu-name">BUG</div>
+                <div class="menu-desc">Lapor & cek bug</div>
+                <span class="menu-badge">NEW</span>
+            </div>
+
+            <!-- TRACKER -->
+            <div class="menu-card" onclick="menuAction('tracker')">
+                <div class="menu-icon"><i class="fas fa-map-pin"></i></div>
+                <div class="menu-name">TRACKER</div>
+                <div class="menu-desc">Lacak status & lokasi</div>
+                <span class="menu-badge">LIVE</span>
+            </div>
+
+            <!-- SENDER -->
+            <div class="menu-card" onclick="menuAction('sender')">
+                <div class="menu-icon"><i class="fas fa-paper-plane"></i></div>
+                <div class="menu-name">SENDER</div>
+                <div class="menu-desc">Kirim pesan massal</div>
+                <span class="menu-badge">PRO</span>
+            </div>
+
+            <!-- TABUNGANKU -->
+            <div class="menu-card" onclick="menuAction('tabungaku')">
+                <div class="menu-icon"><i class="fas fa-piggy-bank"></i></div>
+                <div class="menu-name">TABUNGANKU</div>
+                <div class="menu-desc">Kelola tabungan</div>
+                <span class="menu-badge">SALDO</span>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <i class="fas fa-code"></i> created by <span>SAMIL</span>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // CEK SESSION
+        // ============================================================
+        const username = sessionStorage.getItem('smxl_user');
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================================
+        // BACK TO DASHBOARD
+        // ============================================================
+        function goBack() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // ============================================================
+        // MENU ACTION
+        // ============================================================
+        function menuAction(menu) {
+            const names = {
+                bug: '🐛 Bug Report',
+                tracker: '📍 Tracker',
+                sender: '📨 Sender',
+                tabungaku: '💰 Tabungaku'
+            };
+            alert(`🔧 Menu "${names[menu] || menu}" akan segera hadir!`);
+        }
+    </script>
+
+</body>
+  </html>
