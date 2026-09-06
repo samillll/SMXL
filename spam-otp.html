@@ -6,31 +6,11 @@
     <title>SMXL - Spam OTP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        /* ============================================================
-           DISABLE COPY & TAP HIGHLIGHT
-           ============================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent !important;
-            -webkit-touch-callout: none !important;
-            outline: none !important;
-        }
-
-        ::selection {
-            background: transparent;
-        }
-        ::-moz-selection {
-            background: transparent;
-        }
-
+        /* ===== STYLE SAMA KAYAK SEBELUMNYA ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent !important; -webkit-touch-callout: none !important; outline: none !important; }
+        ::selection { background: transparent; }
+        ::-moz-selection { background: transparent; }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
         body {
             font-family: 'Inter', sans-serif;
             background: #0a0a0a;
@@ -40,11 +20,10 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background-image: 
-                radial-gradient(ellipse at 30% 50%, rgba(255, 107, 0, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 50%, rgba(255, 107, 0, 0.03) 0%, transparent 60%);
+            background-image: radial-gradient(ellipse at 30% 50%, rgba(255, 107, 0, 0.05) 0%, transparent 60%),
+                              radial-gradient(ellipse at 70% 50%, rgba(255, 107, 0, 0.03) 0%, transparent 60%);
         }
-
+        /* ===== SISANYA SAMA KAYAK SEBELUMNYA ===== */
         .otp-container {
             background: rgba(16, 16, 16, 0.92);
             backdrop-filter: blur(20px);
@@ -57,432 +36,73 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 107, 0, 0.03);
             transition: transform 0.3s ease;
         }
-
-        .otp-container:hover {
-            transform: translateY(-2px);
-        }
-
-        /* ===== HEADER ===== */
-        .otp-header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .otp-header .icon {
-            font-size: 44px;
-            color: #ff6b00;
-            background: rgba(255, 107, 0, 0.08);
-            padding: 14px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .otp-header h2 {
-            font-size: 26px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff6b00, #ff8c38);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .otp-header p {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        /* ===== SERVICE LIST ===== */
-        .service-list {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin: 16px 0 20px;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-
-        .service-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .service-list::-webkit-scrollbar-thumb {
-            background: #ff6b00;
-            border-radius: 20px;
-        }
-        .service-list::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .service-count {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.25);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .service-count i {
-            color: #ff6b00;
-            margin-right: 4px;
-        }
-
-        .service-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .service-tag {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .service-tag i {
-            color: #ff6b00;
-            margin-right: 4px;
-            font-size: 9px;
-        }
-
-        .service-tag.success {
-            border-color: rgba(0, 200, 83, 0.3);
-            background: rgba(0, 200, 83, 0.05);
-            color: #00c853;
-        }
-
-        .service-tag.failed {
-            border-color: rgba(255, 68, 68, 0.3);
-            background: rgba(255, 68, 68, 0.05);
-            color: #ff4444;
-        }
-
-        .service-tag.waiting {
-            border-color: rgba(255, 107, 0, 0.2);
-            background: rgba(255, 107, 0, 0.05);
-            color: #ff6b00;
-        }
-
-        /* ===== INPUT ===== */
-        .input-group {
-            margin: 18px 0 22px;
-        }
-
-        .input-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .input-group label i {
-            color: #ff6b00;
-            margin-right: 6px;
-        }
-
-        .input-group .input-wrapper {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .input-group .input-wrapper:focus-within {
-            border-color: #ff6b00;
-            background: rgba(255, 107, 0, 0.04);
-            box-shadow: 0 0 30px rgba(255, 107, 0, 0.04);
-        }
-
-        .input-group .input-wrapper .prefix {
-            padding: 0 0 0 16px;
-            color: rgba(255, 255, 255, 0.15);
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .input-group .input-wrapper input {
-            width: 100%;
-            padding: 14px 16px;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-        }
-
-        .input-group .input-wrapper input::placeholder {
-            color: rgba(255, 255, 255, 0.12);
-            font-weight: 400;
-        }
-
-        .input-group .hint {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.12);
-            margin-top: 4px;
-        }
-
-        /* ===== TOMBOL SEND ===== */
-        .btn-send {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #ff6b00, #e65c00);
-            border: none;
-            border-radius: 14px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-send::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-send:hover::after {
-            opacity: 1;
-        }
-
-        .btn-send:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3);
-        }
-
-        .btn-send:active {
-            transform: scale(0.97);
-        }
-
-        .btn-send:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .btn-send i {
-            font-size: 18px;
-        }
-
-        /* ===== PROGRESS ===== */
-        .progress-container {
-            margin-top: 20px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b00, #ff8c38);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .progress-status {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.25);
-        }
-
-        .progress-status .status-text {
-            font-weight: 500;
-        }
-
-        .progress-status .status-count {
-            color: rgba(255, 255, 255, 0.15);
-        }
-
-        .progress-detail {
-            margin-top: 12px;
-            max-height: 100px;
-            overflow-y: auto;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.15);
-            line-height: 1.6;
-        }
-
-        .progress-detail::-webkit-scrollbar {
-            width: 2px;
-        }
-        .progress-detail::-webkit-scrollbar-thumb {
-            background: #ff6b00;
-            border-radius: 20px;
-        }
-
-        .progress-detail .detail-item {
-            padding: 2px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .progress-detail .detail-item.success {
-            color: #00c853;
-        }
-
-        .progress-detail .detail-item.failed {
-            color: #ff4444;
-        }
-
-        .progress-detail .detail-item i {
-            font-size: 10px;
-        }
-
-        /* ===== RESULT ===== */
-        .result-msg {
-            margin-top: 16px;
-            padding: 14px 18px;
-            border-radius: 12px;
-            display: none;
-            font-size: 14px;
-            font-weight: 500;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .result-msg.success {
-            display: block;
-            background: rgba(0, 200, 83, 0.06);
-            border: 1px solid rgba(0, 200, 83, 0.1);
-            color: #00c853;
-        }
-
-        .result-msg.error {
-            display: block;
-            background: rgba(255, 68, 68, 0.06);
-            border: 1px solid rgba(255, 68, 68, 0.1);
-            color: #ff4444;
-        }
-
-        .result-msg.info {
-            display: block;
-            background: rgba(255, 107, 0, 0.06);
-            border: 1px solid rgba(255, 107, 0, 0.1);
-            color: #ff6b00;
-        }
-
-        .result-msg i {
-            margin-right: 8px;
-        }
-
-        .result-msg .result-detail {
-            margin-top: 8px;
-            font-size: 12px;
-            font-weight: 400;
-            opacity: 0.7;
-            white-space: pre-line;
-        }
-
-        /* ===== BACK ===== */
-        .back-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .back-row a {
-            color: rgba(255, 255, 255, 0.15);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        .back-row a:hover {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .back-row a i {
-            margin-right: 6px;
-        }
-
-        .back-row .status-badge {
-            font-size: 10px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(0, 200, 83, 0.06);
-            border: 1px solid rgba(0, 200, 83, 0.06);
-            color: rgba(255, 255, 255, 0.12);
-        }
-
-        .back-row .status-badge.online {
-            color: #00c853;
-            border-color: rgba(0, 200, 83, 0.15);
-            background: rgba(0, 200, 83, 0.06);
-        }
-
-        /* ===== RESPONSIVE ===== */
+        .otp-container:hover { transform: translateY(-2px); }
+        .otp-header { text-align: center; margin-bottom: 24px; }
+        .otp-header .icon { font-size: 44px; color: #ff6b00; background: rgba(255, 107, 0, 0.08); padding: 14px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+        .otp-header h2 { font-size: 26px; font-weight: 800; background: linear-gradient(135deg, #ff6b00, #ff8c38); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .otp-header p { color: rgba(255, 255, 255, 0.3); font-size: 14px; margin-top: 4px; }
+        .service-list { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 16px; padding: 14px 16px; margin: 16px 0 20px; max-height: 180px; overflow-y: auto; }
+        .service-list::-webkit-scrollbar { width: 3px; }
+        .service-list::-webkit-scrollbar-thumb { background: #ff6b00; border-radius: 20px; }
+        .service-count { font-size: 12px; color: rgba(255, 255, 255, 0.25); margin-bottom: 8px; font-weight: 500; }
+        .service-count i { color: #ff6b00; margin-right: 4px; }
+        .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .service-tag { background: rgba(255, 255, 255, 0.04); padding: 4px 12px; border-radius: 20px; font-size: 11px; color: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255, 255, 255, 0.04); font-weight: 500; transition: all 0.3s ease; }
+        .service-tag i { color: #ff6b00; margin-right: 4px; font-size: 9px; }
+        .service-tag.success { border-color: rgba(0, 200, 83, 0.3); background: rgba(0, 200, 83, 0.05); color: #00c853; }
+        .service-tag.failed { border-color: rgba(255, 68, 68, 0.3); background: rgba(255, 68, 68, 0.05); color: #ff4444; }
+        .service-tag.waiting { border-color: rgba(255, 107, 0, 0.2); background: rgba(255, 107, 0, 0.05); color: #ff6b00; }
+        .input-group { margin: 18px 0 22px; }
+        .input-group label { font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.6); display: block; margin-bottom: 6px; }
+        .input-group label i { color: #ff6b00; margin-right: 6px; }
+        .input-group .input-wrapper { display: flex; align-items: center; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; transition: all 0.3s ease; }
+        .input-group .input-wrapper:focus-within { border-color: #ff6b00; background: rgba(255, 107, 0, 0.04); box-shadow: 0 0 30px rgba(255, 107, 0, 0.04); }
+        .input-group .input-wrapper .prefix { padding: 0 0 0 16px; color: rgba(255, 255, 255, 0.15); font-weight: 600; font-size: 14px; }
+        .input-group .input-wrapper input { width: 100%; padding: 14px 16px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 500; transition: all 0.3s ease; font-family: 'Inter', sans-serif; outline: none; }
+        .input-group .input-wrapper input::placeholder { color: rgba(255, 255, 255, 0.12); font-weight: 400; }
+        .input-group .hint { font-size: 11px; color: rgba(255, 255, 255, 0.12); margin-top: 4px; }
+        .btn-send { width: 100%; padding: 16px; background: linear-gradient(135deg, #ff6b00, #e65c00); border: none; border-radius: 14px; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
+        .btn-send::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s ease; }
+        .btn-send:hover::after { opacity: 1; }
+        .btn-send:hover { transform: scale(1.02); box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3); }
+        .btn-send:active { transform: scale(0.97); }
+        .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+        .btn-send i { font-size: 18px; }
+        .progress-container { margin-top: 20px; display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-bar-bg { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.04); border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ff6b00, #ff8c38); border-radius: 10px; width: 0%; transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .progress-status { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.25); }
+        .progress-status .status-text { font-weight: 500; }
+        .progress-status .status-count { color: rgba(255, 255, 255, 0.15); }
+        .progress-detail { margin-top: 12px; max-height: 100px; overflow-y: auto; font-size: 11px; color: rgba(255, 255, 255, 0.15); line-height: 1.6; }
+        .progress-detail::-webkit-scrollbar { width: 2px; }
+        .progress-detail::-webkit-scrollbar-thumb { background: #ff6b00; border-radius: 20px; }
+        .progress-detail .detail-item { padding: 2px 8px; border-radius: 4px; display: flex; align-items: center; gap: 6px; }
+        .progress-detail .detail-item.success { color: #00c853; }
+        .progress-detail .detail-item.failed { color: #ff4444; }
+        .progress-detail .detail-item i { font-size: 10px; }
+        .result-msg { margin-top: 16px; padding: 14px 18px; border-radius: 12px; display: none; font-size: 14px; font-weight: 500; animation: fadeIn 0.5s ease; }
+        .result-msg.success { display: block; background: rgba(0, 200, 83, 0.06); border: 1px solid rgba(0, 200, 83, 0.1); color: #00c853; }
+        .result-msg.error { display: block; background: rgba(255, 68, 68, 0.06); border: 1px solid rgba(255, 68, 68, 0.1); color: #ff4444; }
+        .result-msg.info { display: block; background: rgba(255, 107, 0, 0.06); border: 1px solid rgba(255, 107, 0, 0.1); color: #ff6b00; }
+        .result-msg i { margin-right: 8px; }
+        .result-msg .result-detail { margin-top: 8px; font-size: 12px; font-weight: 400; opacity: 0.7; white-space: pre-line; }
+        .back-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+        .back-row a { color: rgba(255, 255, 255, 0.15); text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.3s; }
+        .back-row a:hover { color: rgba(255, 255, 255, 0.3); }
+        .back-row a i { margin-right: 6px; }
+        .back-row .status-badge { font-size: 10px; padding: 4px 12px; border-radius: 20px; background: rgba(0, 200, 83, 0.06); border: 1px solid rgba(0, 200, 83, 0.06); color: rgba(255, 255, 255, 0.12); }
+        .back-row .status-badge.online { color: #00c853; border-color: rgba(0, 200, 83, 0.15); background: rgba(0, 200, 83, 0.06); }
+        .back-row .status-badge.offline { color: #ff4444; border-color: rgba(255, 68, 68, 0.15); background: rgba(255, 68, 68, 0.06); }
         @media (max-width: 480px) {
-            .otp-container {
-                padding: 24px 16px 20px;
-                border-radius: 20px;
-            }
-            .otp-header h2 {
-                font-size: 22px;
-            }
-            .service-list {
-                max-height: 120px;
-                padding: 10px 12px;
-            }
-            .service-tag {
-                font-size: 10px;
-                padding: 3px 10px;
-            }
-            .input-group .input-wrapper input {
-                font-size: 14px;
-                padding: 12px 14px;
-            }
-            .btn-send {
-                font-size: 14px;
-                padding: 14px;
-            }
-            .back-row {
-                flex-direction: column;
-                gap: 10px;
-            }
+            .otp-container { padding: 24px 16px 20px; border-radius: 20px; }
+            .otp-header h2 { font-size: 22px; }
+            .service-list { max-height: 120px; padding: 10px 12px; }
+            .service-tag { font-size: 10px; padding: 3px 10px; }
+            .input-group .input-wrapper input { font-size: 14px; padding: 12px 14px; }
+            .btn-send { font-size: 14px; padding: 14px; }
+            .back-row { flex-direction: column; gap: 10px; }
         }
     </style>
 
@@ -490,26 +110,19 @@
         // ============================================================
         // DISABLE COPY, RIGHT CLICK, DAN KEYBOARD SHORTCUT
         // ============================================================
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j' || e.key === 's')) {
-                e.preventDefault();
-                return false;
+                e.preventDefault(); return false;
             }
-            if (e.key === 'F12') {
-                e.preventDefault();
-                return false;
-            }
+            if (e.key === 'F12') { e.preventDefault(); return false; }
         });
         document.addEventListener('touchstart', function() {}, { passive: true });
     </script>
 </head>
 <body>
 
-    <div class="otp-container">
+    <div class="otp-container" id="app">
 
         <!-- ===== HEADER ===== -->
         <div class="otp-header">
@@ -522,7 +135,7 @@
         <div class="service-list">
             <div class="service-count">
                 <i class="fas fa-server"></i> <span id="totalServices">0</span> Layanan siap
-                <span style="float:right;font-weight:400;color:rgba(255,255,255,0.1);">Real Request</span>
+                <span style="float:right;font-weight:400;color:rgba(255,255,255,0.1);" id="apiStatus">⏳ Loading...</span>
             </div>
             <div class="service-tags" id="serviceTags"></div>
         </div>
@@ -560,8 +173,8 @@
         <!-- ===== BACK + STATUS ===== -->
         <div class="back-row">
             <a href="menu.html"><i class="fas fa-arrow-left"></i> Kembali ke Menu</a>
-            <span class="status-badge online" id="serverStatus">
-                <i class="fas fa-circle" style="font-size:8px;"></i> Online
+            <span class="status-badge" id="serverStatus">
+                <i class="fas fa-circle" style="font-size:8px;"></i> Loading...
             </span>
         </div>
 
@@ -607,28 +220,59 @@
         renderServices();
 
         // ============================================================
-        // CEK KONEKSI KE BACKEND
+        // LOAD API CONFIG DARI GITHUB
         // ============================================================
-        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? 'http://localhost:3000' 
-            : 'http://192.168.100.81:3000'; // Ganti dengan URL deploy lo
+        let API_URL = 'http://localhost:3000';
 
-        async function checkServer() {
+        async function loadApiConfig() {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/samillll/SMXL/main/api-config.json');
+                if (!response.ok) throw new Error('Gagal fetch config');
+                const data = await response.json();
+                API_URL = data.api_url;
+
+                // Update status
+                document.getElementById('apiStatus').textContent = '✅ Online';
+                document.getElementById('apiStatus').style.color = '#00c853';
+                document.getElementById('serverStatus').textContent = '🟢 Online';
+                document.getElementById('serverStatus').className = 'status-badge online';
+
+                console.log('✅ API Config loaded:', API_URL);
+
+                // Test koneksi ke backend
+                testConnection();
+
+            } catch (error) {
+                console.warn('❌ Gagal load config:', error);
+                document.getElementById('apiStatus').textContent = '⚠️ Fallback Local';
+                document.getElementById('apiStatus').style.color = '#ff6b00';
+                document.getElementById('serverStatus').textContent = '🔴 Offline';
+                document.getElementById('serverStatus').className = 'status-badge offline';
+                API_URL = 'http://192.168.100.81:3000';
+            }
+        }
+
+        // ============================================================
+        // TEST KONEKSI KE BACKEND
+        // ============================================================
+        async function testConnection() {
             try {
                 const res = await fetch(`${API_URL}/api/health`, {
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: AbortSignal.timeout(5000)
                 });
                 if (res.ok) {
                     document.getElementById('serverStatus').textContent = '🟢 Online';
                     document.getElementById('serverStatus').className = 'status-badge online';
+                } else {
+                    document.getElementById('serverStatus').textContent = '🟡 Error';
+                    document.getElementById('serverStatus').className = 'status-badge offline';
                 }
             } catch (e) {
                 document.getElementById('serverStatus').textContent = '🔴 Offline';
-                document.getElementById('serverStatus').className = 'status-badge';
+                document.getElementById('serverStatus').className = 'status-badge offline';
             }
         }
-        checkServer();
-        setInterval(checkServer, 30000);
 
         // ============================================================
         // SPAM OTP — REAL REQUEST
@@ -646,7 +290,6 @@
             const progressDetail = document.getElementById('progressDetail');
             const resultMsg = document.getElementById('resultMsg');
 
-            // ===== VALIDASI =====
             if (isRunning) return;
 
             if (!target || target.length < 8) {
@@ -657,12 +300,10 @@
                 return;
             }
 
-            // Format nomor ke 62
             let fullNumber = target;
             if (!fullNumber.startsWith('62')) {
                 fullNumber = '62' + fullNumber;
             }
-            // Hapus karakter non-digit
             fullNumber = fullNumber.replace(/[^0-9]/g, '');
 
             if (fullNumber.length < 10 || fullNumber.length > 15) {
@@ -673,7 +314,6 @@
                 return;
             }
 
-            // ===== RESET =====
             isRunning = true;
             resultMsg.style.display = 'none';
             progressContainer.style.display = 'block';
@@ -684,7 +324,6 @@
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
 
-            // Reset tag status
             services.forEach((_, i) => {
                 const tag = document.getElementById(`tag_${i}`);
                 if (tag) {
@@ -693,13 +332,10 @@
                 }
             });
 
-            // ===== KIRIM REQUEST KE BACKEND =====
             try {
                 const response = await fetch(`${API_URL}/api/spam-otp`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         phone: fullNumber,
                         services: services.map(s => s.name)
@@ -713,7 +349,6 @@
 
                 const data = await response.json();
 
-                // ===== UPDATE PROGRESS =====
                 let successCount = 0;
                 let failCount = 0;
                 let detailHtml = '';
@@ -732,7 +367,6 @@
                         }
                     }
 
-                    // Detail log
                     const statusIcon = result.status === 'success' ? '✅' : '❌';
                     const statusClass = result.status === 'success' ? 'success' : 'failed';
                     const errorMsg = result.error ? ` (${result.error})` : '';
@@ -743,7 +377,6 @@
                         </div>
                     `;
 
-                    // Update progress per layanan
                     const progress = ((index + 1) / services.length) * 100;
                     progressFill.style.width = progress + '%';
                     statusText.textContent = `📤 ${result.status === 'success' ? '✅' : '❌'} ${result.service}`;
@@ -751,7 +384,6 @@
                     progressDetail.innerHTML = detailHtml;
                 });
 
-                // ===== FINAL =====
                 progressFill.style.width = '100%';
                 statusText.textContent = `✅ Selesai! ${successCount} berhasil, ${failCount} gagal`;
                 statusCount.textContent = `${services.length} / ${services.length}`;
@@ -767,7 +399,6 @@
                 resultMsg.style.display = 'block';
 
             } catch (error) {
-                // ===== ERROR =====
                 console.error('Spam error:', error);
                 resultMsg.className = 'result-msg error';
                 resultMsg.innerHTML = `
@@ -784,14 +415,13 @@
                 statusCount.textContent = '0 / ' + services.length;
             }
 
-            // ===== RESET TOMBOL =====
             isRunning = false;
             sendBtn.disabled = false;
             sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> SEND OTP';
         }
 
         // ============================================================
-        // VALIDASI INPUT (HANYA ANGKA)
+        // VALIDASI INPUT
         // ============================================================
         document.getElementById('targetNumber').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
@@ -802,7 +432,14 @@
                 startSpam();
             }
         });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        loadApiConfig();
+        // Refresh config setiap 30 detik
+        setInterval(loadApiConfig, 30000);
     </script>
 
 </body>
-    </html>
+</html>
