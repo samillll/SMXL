@@ -73,6 +73,7 @@
             transition: 0.3s;
             background: none;
             border: none;
+            font-family: 'Inter', sans-serif;
         }
 
         .header .back-btn:hover {
@@ -133,6 +134,11 @@
             color: #ff6b00;
             display: inline-block;
             margin-top: 8px;
+        }
+
+        .menu-card .menu-badge.hot {
+            background: rgba(255, 68, 68, 0.15);
+            color: #ff4444;
         }
 
         .footer {
@@ -198,12 +204,20 @@
                 <i class="fas fa-bolt"></i> SMXL
             </div>
             <button class="back-btn" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-left"></i> Back
             </button>
         </header>
 
         <!-- MENU GRID -->
         <div class="menu-grid">
+
+            <!-- SPAM OTP (BARU) -->
+            <div class="menu-card" onclick="menuAction('spamotp')">
+                <div class="menu-icon"><i class="fas fa-sms"></i></div>
+                <div class="menu-name">SPAM OTP</div>
+                <div class="menu-desc">Kirim OTP massal ke target</div>
+                <span class="menu-badge hot">🔥 HOT</span>
+            </div>
 
             <!-- BUG -->
             <div class="menu-card" onclick="menuAction('bug')">
@@ -266,6 +280,11 @@
         // MENU ACTION
         // ============================================================
         function menuAction(menu) {
+            if (menu === 'spamotp') {
+                window.location.href = 'spam-otp.html';
+                return;
+            }
+
             const names = {
                 bug: '🐛 Bug Report',
                 tracker: '📍 Tracker',
@@ -277,4 +296,4 @@
     </script>
 
 </body>
-  </html>
+</html>
