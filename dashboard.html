@@ -417,79 +417,42 @@
             min-width: 200px;
         }
 
-        /* ===== MENU SECTION — GRID ===== */
-        .menu-grid-section {
-            margin-top: 10px;
-        }
-
-        .menu-grid-section .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .menu-grid-section .section-title i {
-            color: #ff6b00;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-
-        .menu-grid .menu-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 18px;
-            padding: 24px 16px;
+        /* ===== MENU BISA DI AKSES VIA TOMBOL DI BAWAH ===== */
+        .menu-access {
             text-align: center;
-            transition: all 0.3s ease;
+            margin: 24px 0 12px;
+        }
+
+        .menu-access .btn-menu {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 107, 0, 0.05));
+            border: 1px solid rgba(255, 107, 0, 0.15);
+            color: #ff6b00;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent !important;
             outline: none !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .menu-grid .menu-card:hover {
-            background: rgba(255, 107, 0, 0.04);
-            border-color: rgba(255, 107, 0, 0.1);
-            transform: translateY(-3px);
+        .menu-access .btn-menu:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.25), rgba(255, 107, 0, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 107, 0, 0.1);
         }
 
-        .menu-grid .menu-card:active {
+        .menu-access .btn-menu:active {
             transform: scale(0.95);
         }
 
-        .menu-grid .menu-card .menu-icon {
-            font-size: 32px;
-            color: #ff6b00;
-            margin-bottom: 8px;
-        }
-
-        .menu-grid .menu-card .menu-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .menu-grid .menu-card .menu-desc {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.2);
-            margin-top: 2px;
-        }
-
-        .menu-grid .menu-card .menu-badge {
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 12px;
-            border-radius: 20px;
-            background: rgba(255, 107, 0, 0.12);
-            color: #ff6b00;
-            display: inline-block;
-            margin-top: 6px;
+        .menu-access .btn-menu i {
+            font-size: 20px;
         }
 
         /* ===== BOTTOM NAV ===== */
@@ -596,16 +559,6 @@
             .berita-item .berita-thumb {
                 height: 60px;
             }
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .menu-grid .menu-card {
-                padding: 18px 12px;
-            }
-            .menu-grid .menu-card .menu-icon {
-                font-size: 26px;
-            }
             .bottom-nav {
                 height: 56px;
                 padding: 4px 0 env(safe-area-inset-bottom);
@@ -616,6 +569,10 @@
             }
             .nav-item i {
                 font-size: 17px;
+            }
+            .menu-access .btn-menu {
+                padding: 12px 24px;
+                font-size: 14px;
             }
         }
     </style>
@@ -742,46 +699,11 @@
             </div>
         </div>
 
-        <!-- MENU GRID (4 MENU — LANGSUNG KE HALAMAN) -->
-        <div class="menu-grid-section">
-            <div class="section-title">
-                <i class="fas fa-th-large"></i> Menu
-            </div>
-            <div class="menu-grid">
-
-                <!-- BUG → ke menu.html (atau halaman sendiri) -->
-                <div class="menu-card" onclick="goTo('menu')">
-                    <div class="menu-icon"><i class="fas fa-bug"></i></div>
-                    <div class="menu-name">BUG</div>
-                    <div class="menu-desc">Lapor & cek bug</div>
-                    <span class="menu-badge">NEW</span>
-                </div>
-
-                <!-- TRACKER → placeholder -->
-                <div class="menu-card" onclick="goTo('tracker')">
-                    <div class="menu-icon"><i class="fas fa-map-pin"></i></div>
-                    <div class="menu-name">TRACKER</div>
-                    <div class="menu-desc">Lacak status & lokasi</div>
-                    <span class="menu-badge">LIVE</span>
-                </div>
-
-                <!-- SENDER → LANGSUNG KE sender.html -->
-                <div class="menu-card" onclick="goTo('sender')">
-                    <div class="menu-icon"><i class="fas fa-paper-plane"></i></div>
-                    <div class="menu-name">SENDER</div>
-                    <div class="menu-desc">Kirim pesan massal</div>
-                    <span class="menu-badge">PRO</span>
-                </div>
-
-                <!-- TABUNGANKU → placeholder -->
-                <div class="menu-card" onclick="goTo('tabungaku')">
-                    <div class="menu-icon"><i class="fas fa-piggy-bank"></i></div>
-                    <div class="menu-name">TABUNGANKU</div>
-                    <div class="menu-desc">Kelola tabungan</div>
-                    <span class="menu-badge">SALDO</span>
-                </div>
-
-            </div>
+        <!-- TOMBOL AKSES MENU (TANPA GRID MENU) -->
+        <div class="menu-access">
+            <button class="btn-menu" onclick="goToMenu()">
+                <i class="fas fa-th-large"></i> Buka Menu
+            </button>
         </div>
 
     </div>
@@ -848,20 +770,10 @@
         }
 
         // ============================================================
-        // MENU GRID — LANGSUNG KE HALAMAN
+        // GO TO MENU
         // ============================================================
-        function goTo(page) {
-            if (page === 'menu') {
-                window.location.href = 'menu.html';
-            } else if (page === 'sender') {
-                window.location.href = 'sender.html';
-            } else if (page === 'tracker') {
-                alert('📍 Tracker akan segera hadir!');
-            } else if (page === 'tabungaku') {
-                alert('💰 Tabungaku akan segera hadir!');
-            } else {
-                alert('🔧 Halaman sedang dalam pengembangan.');
-            }
+        function goToMenu() {
+            window.location.href = 'menu.html';
         }
 
         // ============================================================
@@ -1001,4 +913,4 @@
     </script>
 
 </body>
-                        </html>
+                                                                   </html>
