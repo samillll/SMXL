@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SMXL - Spam OTP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            outline: none !important;
+        }
+
+        ::selection {
+            background: transparent;
+        }
+        ::-moz-selection {
+            background: transparent;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .otp-container {
+            background: rgba(16, 16, 16, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 107, 0, 0.15);
+            border-radius: 28px;
+            padding: 36px 30px 30px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+        }
+
+        .otp-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .otp-header .icon {
+            font-size: 44px;
+            color: #ff6b00;
+            background: rgba(255, 107, 0, 0.08);
+            padding: 14px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .otp-header h2 {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b00, #ff8c38);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .otp-header p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .service-list {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin: 16px 0 20px;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .service-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .service-list::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 20px;
+        }
+
+        .service-count {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .service-count i {
+            color: #ff6b00;
+            margin-right: 4px;
+        }
+
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .service-tag {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-weight: 500;
+        }
+
+        .service-tag i {
+            color: #ff6b00;
+            margin-right: 4px;
+            font-size: 9px;
+        }
+
+        .input-group {
+            margin: 18px 0 22px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .input-group label i {
+            color: #ff6b00;
+            margin-right: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.12);
+            font-weight: 400;
+        }
+
+        .input-group input:focus {
+            border-color: #ff6b00;
+            background: rgba(255, 107, 0, 0.04);
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.04);
+        }
+
+        .input-group .hint {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.12);
+            margin-top: 4px;
+        }
+
+        .btn-send {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff6b00, #e65c00);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-send:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-send:active {
+            transform: scale(0.97);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-send i {
+            font-size: 18px;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b00, #ff8c38);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .progress-status .status-text {
+            font-weight: 500;
+        }
+
+        .progress-status .status-count {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .result-msg {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .result-msg.success {
+            display: block;
+            background: rgba(0, 200, 83, 0.06);
+            border: 1px solid rgba(0, 200, 83, 0.1);
+            color: #00c853;
+        }
+
+        .result-msg.error {
+            display: block;
+            background: rgba(255, 68, 68, 0.06);
+            border: 1px solid rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+        }
+
+        .result-msg i {
+            margin-right: 8px;
+        }
+
+        .back-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .back-row a {
+            color: rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .back-row a:hover {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-row a i {
+            margin-right: 6px;
+        }
+
+        @media (max-width: 480px) {
+            .otp-container {
+                padding: 24px 16px 20px;
+                border-radius: 20px;
+            }
+            .otp-header h2 {
+                font-size: 22px;
+            }
+            .service-list {
+                max-height: 120px;
+                padding: 10px 12px;
+            }
+            .service-tag {
+                font-size: 10px;
+                padding: 3px 10px;
+            }
+            .input-group input {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .btn-send {
+                font-size: 14px;
+                padding: 14px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'i' || e.key === 'j')) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('touchstart', function() {}, { passive: true });
+    </script>
+</head>
+<body>
+
+    <div class="otp-container">
+
+        <!-- HEADER -->
+        <div class="otp-header">
+            <div class="icon"><i class="fas fa-sms"></i></div>
+            <h2>Spam OTP</h2>
+            <p>Kirim permintaan OTP ke target via semua layanan</p>
+        </div>
+
+        <!-- DAFTAR LAYANAN (DARI FOTO) -->
+        <div class="service-list">
+            <div class="service-count">
+                <i class="fas fa-server"></i> <span id="totalServices">0</span> Layanan aktif
+            </div>
+            <div class="service-tags" id="serviceTags"></div>
+        </div>
+
+        <!-- INPUT NOMOR TARGET -->
+        <div class="input-group">
+            <label><i class="fab fa-whatsapp"></i> Nomor WhatsApp Target</label>
+            <input type="text" id="targetNumber" placeholder="6281234567890" value="6281234567890" />
+            <div class="hint">Format: 62xxxxxxxxxx (tanpa +)</div>
+        </div>
+
+        <!-- TOMBOL SEND -->
+        <button class="btn-send" id="sendBtn" onclick="startSpam()">
+            <i class="fas fa-paper-plane"></i> SEND OTP
+        </button>
+
+        <!-- PROGRESS -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-status">
+                <span class="status-text" id="statusText">Mengirim...</span>
+                <span class="status-count" id="statusCount">0 / 0</span>
+            </div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-msg" id="resultMsg"></div>
+
+        <!-- BACK -->
+        <div class="back-row">
+            <a href="menu.html"><i class="fas fa-arrow-left"></i> Kembali ke Menu</a>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // DATA LAYANAN DARI FOTO
+        // ============================================================
+        const services = [
+            { name: "Adira Finance", number: "+62 811-8115-811" },
+            { name: "Jaringan IDN", number: "+62 812-3000-1227" },
+            { name: "Kredit Pintar", number: "+62 858-1119-4585" },
+            { name: "KTA Kilat", number: "+62 811-9990-829" },
+            { name: "matahari OTP", number: "+62 811-1968-8069" },
+            { name: "Paper ID", number: "+62 881-0267-99090" },
+            { name: "Rumah123", number: "+62 877-4704-3412" },
+            { name: "SiCepat OTP", number: "+62 857-1804-1393" },
+            { name: "Singa Fintech", number: "+62 814-1608-1722" }
+        ];
+
+        // ============================================================
+        // RENDER SERVICE TAGS
+        // ============================================================
+        function renderServices() {
+            const container = document.getElementById('serviceTags');
+            document.getElementById('totalServices').textContent = services.length;
+
+            container.innerHTML = services.map(s =>
+                `<span class="service-tag"><i class="fas fa-check-circle"></i> ${s.name}</span>`
+            ).join('');
+        }
+        renderServices();
+
+        // ============================================================
+        // CEK SESSION
+        // ============================================================
+        const username = sessionStorage.getItem('smxl_user');
+        if (!username) {
+            window.location.href = 'index.html';
+        }
+
+        // ============================================================
+        // SPAM OTP
+        // ============================================================
+        let isRunning = false;
+
+        function startSpam() {
+            const target = document.getElementById('targetNumber').value.trim();
+            const sendBtn = document.getElementById('sendBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const statusText = document.getElementById('statusText');
+            const statusCount = document.getElementById('statusCount');
+            const resultMsg = document.getElementById('resultMsg');
+
+            // Validasi
+            if (isRunning) return;
+            if (!target || target.length < 10) {
+                resultMsg.className = 'result-msg error';
+                resultMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Masukkan nomor WhatsApp yang valid (min 10 digit)';
+                resultMsg.style.display = 'block';
+                setTimeout(() => { resultMsg.style.display = 'none'; }, 3000);
+                return;
+            }
+
+            // Reset
+            isRunning = true;
+            resultMsg.style.display = 'none';
+            progressContainer.style.display = 'block';
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+            let current = 0;
+            const total = services.length;
+            let successCount = 0;
+            let failCount = 0;
+            const delay = 700; // ms per request
+
+            function sendNext() {
+                if (current >= total) {
+                    // Selesai
+                    progressFill.style.width = '100%';
+                    statusText.textContent = '✅ Selesai!';
+                    statusCount.textContent = `${successCount} berhasil / ${failCount} gagal`;
+
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> SEND OTP';
+
+                    resultMsg.className = 'result-msg success';
+                    resultMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${successCount} dari ${total} layanan berhasil mengirim OTP ke ${target}`;
+                    resultMsg.style.display = 'block';
+
+                    isRunning = false;
+                    return;
+                }
+
+                const service = services[current];
+                const progress = ((current + 1) / total) * 100;
+                progressFill.style.width = progress + '%';
+                statusText.textContent = `📤 ${service.name}`;
+                statusCount.textContent = `${current + 1} / ${total}`;
+
+                // Simulasi request ke layanan
+                const isSuccess = Math.random() > 0.15; // 85% sukses
+
+                console.log(`[${service.name}] ${isSuccess ? '✅' : '❌'} OTP ke ${target} via ${service.number}`);
+
+                if (isSuccess) {
+                    successCount++;
+                } else {
+                    failCount++;
+                }
+
+                current++;
+
+                setTimeout(sendNext, delay);
+            }
+
+            // Mulai
+            setTimeout(sendNext, 400);
+        }
+
+        // ============================================================
+        // VALIDASI INPUT (HANYA ANGKA)
+        // ============================================================
+        document.getElementById('targetNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('targetNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startSpam();
+            }
+        });
+    </script>
+
+</body>
+  </html>
